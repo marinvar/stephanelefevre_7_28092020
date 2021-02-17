@@ -6,8 +6,8 @@ const path = require('path');
 
 const User = require('./models/User');
 
-/* const saucesRoutes = require('./routes/sauces');
-const userRoutes = require('./routes/user'); */
+/* const saucesRoutes = require('./routes/sauces'); */
+const userRoutes = require('./routes/user');
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 
 /* app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use('/api/sauces', saucesRoutes);
-app.use('/api/auth', userRoutes); */
+app.use('/api/sauces', saucesRoutes); */
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
