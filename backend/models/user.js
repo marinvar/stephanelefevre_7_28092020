@@ -8,12 +8,23 @@ const User = sequelize.define('User', {
   // Model attributes are defined here
   firstName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false // defaults to true
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false // defaults to true
+    allowNull: false
+  },
+  userName: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   // Other model options go here
+  // tableName: 'Users' not needed, by default all names are pluralized
 });
+
+module.exports = User;
