@@ -1,6 +1,6 @@
 require('dotenv').config();
 const https = require('https');
-const app = require('app');
+const app = require('./app');
 
 const normalizePort = val => {
   const port = parseInt(val, 10);

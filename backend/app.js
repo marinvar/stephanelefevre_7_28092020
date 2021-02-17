@@ -1,28 +1,43 @@
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const path = require('path');
+
+const User = require('./models/User');
 
 /* const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user'); */
 
-
-/* mongoose.connect(`${process.env.DB_CONNECT}`,
-{ useNewUrlParser: true,
-useUnifiedTopology: true }) */
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'mysql'
 });
-/* .then(() => console.log('Connexion à MongoDB réussie !'))
-.catch(() => console.log('Connexion à MongoDB échouée !')); */
-try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+
+const dbConnect = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+    /* dbTablesSync(); */
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+};
+
+const dbTablesSync = async () => {
+  try {
+    await User.sync({ alter: true });
+    console.log('The table for the User model was just synchronized !');
+  } catch (error) {
+    console.error('Problem during the User model synchronization !', error);
+  }
+};
+
+dbConnect()
+.then(() => dbTablesSync())
+.catch(error => console.error('Problem during the User model synchronization : ', error));
+
+
 
 const app = express();
 
