@@ -1,10 +1,11 @@
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const { Sequelize, DataTypes } = require('sequelize');
-const path = require('path');
+const { Sequelize } = require('sequelize');
+const history = require('connect-history-api-fallback');
+/* const path = require('path'); */
 
-const User = require('./models/User');
+const { dbConnect, dbTablesSync } = require('./db-setup');
 
 /* const saucesRoutes = require('./routes/sauces'); */
 const userRoutes = require('./routes/user');
@@ -14,30 +15,9 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   dialect: 'mysql'
 });
 
-const dbConnect = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-    /* dbTablesSync(); */
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
-
-const dbTablesSync = async () => {
-  try {
-    await User.sync({ alter: true });
-    console.log('The table for the User model was just synchronized !');
-  } catch (error) {
-    console.error('Problem during the User model synchronization !', error);
-  }
-};
-
 dbConnect()
 .then(() => dbTablesSync())
 .catch(error => console.error('Problem during the User model synchronization : ', error));
-
-
 
 const app = express();
 
@@ -45,6 +25,8 @@ const app = express();
  * Helmet is used for security purposes, to avaoid several attacks like xss
  */
 app.use(helmet());
+
+app.use(history());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
