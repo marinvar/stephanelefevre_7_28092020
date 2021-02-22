@@ -1,29 +1,57 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="navbar">
+    <a href="/">
+      <img alt="Logo Groupomania" src="@/assets/icon-left-font-monochrome-white.svg">
+    </a>
+    <div id="nav">
+      <router-link to="/">Accueil</router-link> |
+      <router-link to="/signup">Inscription</router-link> |
+      <router-link to="/login">Connexion</router-link> |
+      <router-link to="/about">À propos</router-link>
+    </div>
   </div>
-  <router-view/>
+  <router-view></router-view>
 </template>
 
+
+
 <style lang="scss">
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #091F43;
+  background-color: #D4D4D4;
+}
+
+#navbar {
+  background-color: #091F43;
+  img {
+    width: 50%;
+    padding: 1rem;
+    max-height: 5rem;
+  }
 }
 
 #nav {
   padding: 30px;
-
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: white;
+    text-decoration: none;
+    margin: 1rem;
 
     &.router-link-exact-active {
-      color: #42b983;
+      border-bottom: 0.2rem solid #D1515A;
+      padding-bottom: 0.3rem;
+      border-radius: 0.5rem;
     }
   }
 }
