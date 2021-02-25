@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
+  <div class="home" clas="d-flex">
     <SocialNetwork />
+    
   </div>
 </template>
 
@@ -15,3 +16,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+</style>
