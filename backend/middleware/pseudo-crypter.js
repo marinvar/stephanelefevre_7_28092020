@@ -1,13 +1,12 @@
 /**
  * middleware encrypting pseudo for database storage
  */
-const crypto = require('crypto');
+/* const crypto = require('crypto'); */
+const secret = process.env.PSEUDO_PASS;
 
 const pseudoCrypter = (req, res, next) => {
-  const secret = process.env.PSEUDO_PASS;
-  req.body.pseudo = crypto.createHmac('sha256', secret)
-                         .update(req.body.pseudo)
-                         .digest('hex');
+  const concat = req.body.pseudo + '_' + secret;
+  req.body.pseudo = Buffer.from(concat).toString('hex');
   next();
 }
 
