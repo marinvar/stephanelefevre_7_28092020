@@ -10,7 +10,7 @@ const loginSlowdown = require('../middleware/login-slowdown');
 const passwordStrength = require('../middleware/password-strength');
 
 router.post('/signup', passwordStrength, mailValidator, mailCrypter, pseudoCrypter, userCtrl.signup);
-router.post('/login', loginSlowdown, pseudoCrypter,userCtrl.login);
+router.post('/login', loginSlowdown, pseudoCrypter, userCtrl.login);
 router.post('/signout', auth, mailValidator, pseudoCrypter, userCtrl.signout);
 
 module.exports = router;

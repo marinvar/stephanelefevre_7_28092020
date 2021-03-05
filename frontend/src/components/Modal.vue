@@ -16,6 +16,9 @@
           <div class="modal-footer">
             <slot name="footer">
               Default footer
+              <button class="btn btn-success mt-3" @click="$emit('closeModal')">
+                Fermer
+              </button>
             </slot>
           </div>
         </div>
@@ -44,6 +47,7 @@
 }
 
 .modal-container {
+  display: block;
   color: #091F43;
   font-size: 1.2rem;
   font-weight: 600;
@@ -55,6 +59,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header {
+  display: block!important;
 }
 
 /*

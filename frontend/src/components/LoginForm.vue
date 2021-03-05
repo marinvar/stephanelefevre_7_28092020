@@ -68,12 +68,12 @@ export default {
       })
       .then(function (response) {
         this.setUserId(response.data.userId);
-        this.setToken(response.data.token)
+        this.setToken(response.data.token);
+        this.$router.push('/');
       }.bind(this))
       .catch(function (error) {
         console.log(error);
       });
-      this.$router.push('/');
     },
      ...mapActions(['setUserId', 'setToken'])  
   }
