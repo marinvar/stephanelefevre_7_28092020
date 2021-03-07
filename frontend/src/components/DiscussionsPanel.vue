@@ -7,9 +7,12 @@
       <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Nouvelle discussion" @click="showModalCreate = true">
         <BIconChatLeftText />
       </div>
-      <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechercher dans les discussions" @click="filterDiscussions">
+      <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechercher dans les discussions" @click="toggleDiscussionsFilter">
         <BIconSearch />
       </div >
+      <div id="discussionsFilterWrapper" class="me-3">
+        <input id="discussionsFilter" class="rounded-3 m-auto expanded" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
+      </div>
     </div>
     <h2 class="mt-3">Discussions</h2>
     <DiscussionsList />
@@ -17,11 +20,11 @@
       <Modal @closeModalCreate="closeModalCreate()"> 
         <template v-slot:header>
           <label for="inputModalSubjectCreate">Nouvelle discussion</label>
-          <input id="inputModalSubjectCreate" v-model="subject" type="text" placeholder="Sujet" class="mx-auto"/>
+          <input id="inputModalSubjectCreate" v-model="subject" type="text" placeholder="Sujet" class="mx-auto rounded-3"/>
         </template>
         <template v-slot:body>
           <label for="textareaModalMessageCreate">Message</label>
-          <textarea id="textareaModalMessageCreate" v-model="message" placeholder="Message" class="mx-auto">
+          <textarea id="textareaModalMessageCreate" v-model="message" placeholder="Message" class="mx-auto rounded-3">
           </textarea>
         </template>
         <template v-slot:footer>
@@ -33,7 +36,7 @@
           </button>
         </template>
       </Modal>
-    </div>    
+    </div>
   </div>
 </template>
 
@@ -43,6 +46,8 @@ import Modal from '@/components/Modal.vue';
 import DiscussionsList from '@/components/DiscussionsList.vue';
 import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
+
+let timeout = null;
 
   export default {
     data() {
@@ -93,10 +98,24 @@ import axios from 'axios';
           document.getElementById('discussionsPanelToggle').title = "Masquer les discussions";
         }
       },
-      filterDiscussions () {
-
+      toggleDiscussionsFilter () {
+        const input = document.getElementById('discussionsFilter');
+        if (input.classList.contains('expanded')) {
+          input.classList.remove('expanded');
+          this.updateDiscussionsFilter('');
+          input.value = '';
+        } else {
+          input.classList.add('expanded');          
+        }
       },
-      ...mapActions(['setCurrentDiscussion', 'updateDiscussions'])
+      setDiscussionsFilter (event) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          this.updateDiscussionsFilter(event.target.value);
+        }, 1000);
+        
+      },
+      ...mapActions(['setCurrentDiscussion', 'updateDiscussions', 'updateDiscussionsFilter'])
     },
     components: {
       BIconChatLeftText,
@@ -124,18 +143,33 @@ import axios from 'axios';
       width: 33%;
       color: white
     }
-  }
-
-  #discussionsPanelToggle {
-    transform: rotate(180deg);
-    line-height: 2rem;
-    transition: 0.4s;
-    transition-delay: 0.6s;
-    color: white;
-    &.expanded {
-      transform: rotate(0deg);
+    #discussionsPanelToggle {
+      transform: rotate(180deg);
+      line-height: 2rem;
+      transition: 0.4s;
+      transition-delay: 0.6s;
+      color: white;
+      &.expanded {
+        transform: rotate(0deg);
+      }
+    }
+    #discussionsFilterWrapper {
+      overflow: hidden;
+      align-self: center;
+      #discussionsFilter {
+        transition: 0.4s;
+        transform: translate(100%);
+        &.expanded {
+          transform: translate(0%);
+        }
+        &:focus {
+          outline: none;
+          border: 0.2rem solid #D1515A;
+        }
+      }
     }
   }
+
 
 
 </style>

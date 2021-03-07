@@ -6,6 +6,7 @@ export default createStore({
     userId: null,
     userToken: null,
     currentDiscussion: null,
+    discussionsFilter: [],
     discussions: []
   },
   mutations: {
@@ -30,6 +31,16 @@ export default createStore({
         error => console.error('error when loading discussions :', error)
       );
     },
+    UPDATE_DISCUSSIONS_FILTER(state, filter) {
+      state.discussionsFilter = filter.split(' ');
+      axios.post('http://localhost:3000/api/discussion/getDiscussionsFiltered', { filter: state.discussionsFilter })
+      .then(response => {
+        state.discussions = response.data.discussions;
+      })
+      .catch(
+        error => console.error('error when loading discussions :', error)
+      );
+    }
   
   },
   actions: {
@@ -47,6 +58,9 @@ export default createStore({
     },
     updateDiscussions ({ commit }) {
       commit('UPDATE_DISCUSSIONS');
+    },
+    updateDiscussionsFilter ({ commit }, value) {
+      commit('UPDATE_DISCUSSIONS_FILTER', value);
     }
     /* signupSubmit ( *//* context *//* { commit }, e) { // commit comes from context
       e.preventDefault();
