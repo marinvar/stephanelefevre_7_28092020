@@ -1,4 +1,4 @@
-/* const Sequelize = require('sequelize'); */
+const { Op } = require('sequelize');
 
 const { request } = require('express');
 const Sequelize = require('sequelize');
@@ -18,6 +18,37 @@ exports.createDiscussion = (req, res, next) => {
 
 exports.getDiscussions = (req, res, next) => {
   const discussions = Discussion.findAll({
+    include: { model: User,
+               attributes: ['pseudo'],
+              }
+  })
+  .then((discussions) => {
+    res.status(200).json({ discussions })
+  })
+  .catch(error => res.status(400).json({ error }));
+}
+
+exports.getDiscussionsFiltered = (req, res, next) => {
+  const words = [];
+  for (word of req.body.filter) {
+    const wordToAdd = {[Op.substring]: word};
+    words.push(wordToAdd);
+  }
+  const discussions = Discussion.findAll({
+    where: {
+      [Op.or]: [
+        {subject: 
+          {
+            [Op.and]: words
+          }
+        },
+        {message: 
+          {
+            [Op.and]: words
+          }
+        }
+      ]
+    },
     include: { model: User,
                attributes: ['pseudo'],
               }
