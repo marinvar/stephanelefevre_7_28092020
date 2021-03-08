@@ -12,7 +12,7 @@
       </ul>
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="pseudo">Pseudo</label>
       <input
         class="mx-auto"
@@ -24,7 +24,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="firstName">Prénom</label>
       <input
         class="mx-auto"
@@ -36,7 +36,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="lastName">Nom</label>
       <input
         class="mx-auto"
@@ -48,7 +48,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="email">Email</label>
       <input
         class="mx-auto"
@@ -60,7 +60,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="password">Mot de passe</label>
       <input
         class="mx-auto"
@@ -72,7 +72,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <label for="passwordConfirm">Confirmer le mot de passe</label>
       <input
         class="mx-auto"
@@ -84,7 +84,7 @@
       >
     </p>
 
-    <p>
+    <p class="p-0">
       <input
         class="mx-auto"
         type="submit"

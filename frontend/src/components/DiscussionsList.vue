@@ -1,17 +1,19 @@
 <template>
-  <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussions my-3 mx-3" @click="selectDiscussion">
-    <DiscussionHeader>
-      <template v-slot:subject>
-        <div class="discussion-subject" v-bind:title="discussion.subject">
-          {{ discussion.subject }}
-        </div>
-      </template>
-      <template v-slot:created>
-        <div  class="discussion-created" v-bind:title="'Par ' + discussion.User.pseudo + ', le ' + discussion.created_at">
-          Par {{ discussion.User.pseudo }}, le {{ discussion.created_at }}
-        </div>
-      </template>
-    </DiscussionHeader>
+  <div>
+    <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussions my-3 mx-3" @click="selectDiscussion(discussion)">
+      <DiscussionHeader>
+        <template v-slot:subject>
+          <div class="discussion-subject" v-bind:title="discussion.subject">
+            {{ discussion.subject }}
+          </div>
+        </template>
+        <template v-slot:created>
+          <div  class="discussion-created" v-bind:title="'Par ' + discussion.User.pseudo + ', le ' + discussion.created_at">
+            Par {{ discussion.User.pseudo }}, le {{ discussion.created_at }}
+          </div>
+        </template>
+      </DiscussionHeader>
+    </div>
   </div>
 </template>
 
@@ -25,9 +27,8 @@
       ...mapState([ 'discussions', 'currentDiscussion' ])
     },
     methods: {
-      
-      selectDiscussion () {
-        this.setCurrentDiscussion
+      selectDiscussion (discussion) {
+        this.setCurrentDiscussion(discussion);
       },
       ...mapActions(['setCurrentDiscussion','addDiscussion','updateDiscussions'])
     },

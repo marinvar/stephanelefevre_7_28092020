@@ -5,7 +5,11 @@ export default createStore({
   state: {
     userId: null,
     userToken: null,
-    currentDiscussion: null,
+    currentDiscussion: {
+      User: {pseudo: "Administrateur"},
+      subject: "Welcome",
+      message: "Vous êtes connecté. Sélectionnez une discussion pour l'afficher ici.",
+      created_at: ": Au tout début..."},
     discussionsFilter: [],
     discussions: []
   },
@@ -16,8 +20,8 @@ export default createStore({
     SET_TOKEN(state, userToken) {
       state.userToken = userToken;
     },
-    SET_CURRENT_DISCUSSION(state, subject) {
-      state.currentDiscussion = subject;
+    SET_CURRENT_DISCUSSION(state, discussion) {
+      state.currentDiscussion = discussion;
     },
     ADD_DISCUSSION(state, discussion) {
       state.discussions.push(discussion);

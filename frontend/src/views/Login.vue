@@ -1,5 +1,5 @@
 <template>
-  <LoginForm />
+  <LoginForm class="d-flex flex-fill flex-column" />
 </template>
 
 <script>

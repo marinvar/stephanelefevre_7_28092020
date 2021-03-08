@@ -1,8 +1,8 @@
 <template>
   <div id="navbar">
-    <a href="/">
+    <router-link to="/">
       <img alt="Logo Groupomania" src="@/assets/icon-left-font-monochrome-white.svg">
-    </a>
+    </router-link>
     <div id="nav">
       <router-link to="/">Accueil</router-link>
       <router-link to="/signup">Inscription</router-link>

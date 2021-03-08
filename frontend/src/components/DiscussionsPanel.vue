@@ -10,8 +10,8 @@
       <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechercher dans les discussions" @click="toggleDiscussionsFilter">
         <BIconSearch />
       </div >
-      <div id="discussionsFilterWrapper" class="me-3">
-        <input id="discussionsFilter" class="rounded-3 m-auto expanded" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
+      <div id="discussionsFilterWrapper" class="mx-3">
+        <input id="discussionsFilter" class="rounded-3 m-auto w-100 expanded" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
       </div>
     </div>
     <h2 class="mt-3">Discussions</h2>

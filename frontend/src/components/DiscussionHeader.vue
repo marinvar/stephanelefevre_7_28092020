@@ -13,3 +13,10 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+
+  hr {
+    margin: 0.1rem;
+  }
+</style>
