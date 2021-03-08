@@ -11,9 +11,11 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
+
   p {
     margin: 1rem;
     padding: 1rem;
   }
+
 </style>

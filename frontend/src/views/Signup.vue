@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex flex-fill flex-column">
     <SignupForm />
   </div>
 </template>

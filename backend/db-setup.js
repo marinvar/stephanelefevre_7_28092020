@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const User = require('./models/User');
 const Discussion = require('./models/Discussion');
+const Comment = require('./models/Comment');
 
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -30,5 +31,11 @@ exports.dbTablesSync = async () => {
     console.log('The table for the Discussion model was just synchronized !');
   } catch (error) {
     console.error('Problem during the Discussion model synchronization !', error);
+  }
+  try {
+    await Comment.sync({ alter: false, force: false });
+    console.log('The table for the Comment model was just synchronized !');
+  } catch (error) {
+    console.error('Problem during the Comment model synchronization !', error);
   }
 };

@@ -1,18 +1,18 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const Discussion = require('./Discussion');
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'mysql'
 });
 
-const Discussion = sequelize.define('Discussion', {
-  subject: {
-    type: DataTypes.STRING,
-    allowNull: false, // defaults to true
-    unique: true
-  },
+const Comment = sequelize.define('Comment', {
   message: {
     type: DataTypes.STRING(1550),
+    allowNull: false
+  },
+  author: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   created_at: {
@@ -39,6 +39,7 @@ const Discussion = sequelize.define('Discussion', {
   
 });
 
+Discussion.hasMany(Comment);
+Comment.belongsTo(Discussion);
 
-
-module.exports = Discussion;
+module.exports = Comment;

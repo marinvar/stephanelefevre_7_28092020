@@ -20,7 +20,10 @@ exports.getDiscussions = (req, res, next) => {
   const discussions = Discussion.findAll({
     include: { model: User,
                attributes: ['pseudo'],
-              }
+    },
+    order: [
+      ['created_at', 'DESC']
+    ]      
   })
   .then((discussions) => {
     res.status(200).json({ discussions })
