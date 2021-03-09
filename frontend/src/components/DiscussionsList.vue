@@ -29,8 +29,9 @@
     methods: {
       selectDiscussion (discussion) {
         this.setCurrentDiscussion(discussion);
+        this.updateComments();
       },
-      ...mapActions(['setCurrentDiscussion','addDiscussion','updateDiscussions'])
+      ...mapActions(['setCurrentDiscussion','addDiscussion','updateDiscussions','updateComments'])
     },
     beforeMount() {
       this.updateDiscussions();

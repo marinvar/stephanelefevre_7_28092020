@@ -1,7 +1,7 @@
 <template>
   <div>
     <hr>
-    <div class='comment-message'>
+    <div class='comment-message mx-3'>
       <slot name="message">
         Default Comment
       </slot>
