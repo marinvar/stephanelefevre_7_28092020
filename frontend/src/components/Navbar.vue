@@ -5,12 +5,34 @@
     </router-link>
     <div id="nav">
       <router-link to="/">Accueil</router-link>
-      <router-link to="/signup">Inscription</router-link>
-      <router-link to="/login">Connexion</router-link>
+      <router-link to="/signup" v-if="!this.loggedIn">Inscription</router-link>
+      <router-link to="/login" v-if="!this.loggedIn">Connexion</router-link>
+      <router-link to="/logout" v-if="this.loggedIn">Déconnexion</router-link>
       <router-link to="/about">À propos</router-link>
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['loggedIn'])
+  },
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
+  beforeMount() {
+    const userId = localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null;
+    const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
+    if (userId !== null && userToken !== null) {
+      this.setLoggedIn(true);
+    }
+  }
+  
+}
+</script>
 
 <style lang="scss">
 
@@ -21,9 +43,7 @@
     padding: 1rem;
     max-height: 5rem;
   }
-  h1 {
-    background-color: #D4D4D4;
-  }
+  
 }
 
 #nav {

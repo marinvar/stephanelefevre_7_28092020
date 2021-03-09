@@ -3,22 +3,18 @@ import axios from 'axios';
   
 export default createStore({
   state: {
-    userId: null,
-    userToken: null,
     currentDiscussion: {
       User: {pseudo: "Administrateur"},
       subject: "Welcome",
       message: "Vous êtes connecté. Sélectionnez une discussion pour l'afficher ici.",
       created_at: ": Au tout début..."},
     discussionsFilter: [],
-    discussions: []
+    discussions: [],
+    loggedIn: false,
   },
   mutations: {
-    SET_ID(state, userId) {
-      state.userId = userId;
-    },
-    SET_TOKEN(state, userToken) {
-      state.userToken = userToken;
+    SET_LOGGED_IN(state, loggedIn) {
+      state.loggedIn = loggedIn;
     },
     SET_CURRENT_DISCUSSION(state, discussion) {
       state.currentDiscussion = discussion;
@@ -48,11 +44,8 @@ export default createStore({
   
   },
   actions: {
-    setUserId ({ commit }, value) {
-      commit('SET_ID', value);
-    },
-    setToken ({ commit }, value) {
-      commit('SET_TOKEN', value);
+    setLoggedIn ({ commit }, value) {
+      commit('SET_LOGGED_IN', value);
     },
     setCurrentDiscussion ({ commit }, value) {
       commit('SET_CURRENT_DISCUSSION', value);
@@ -66,9 +59,6 @@ export default createStore({
     updateDiscussionsFilter ({ commit }, value) {
       commit('UPDATE_DISCUSSIONS_FILTER', value);
     }
-    /* signupSubmit ( *//* context *//* { commit }, e) { // commit comes from context
-      e.preventDefault();
-    */
   },
   modules: {
   }

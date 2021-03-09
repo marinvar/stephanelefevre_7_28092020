@@ -11,7 +11,7 @@
         <BIconSearch />
       </div >
       <div id="discussionsFilterWrapper" class="mx-3">
-        <input id="discussionsFilter" class="rounded-3 m-auto w-100 expanded" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
+        <input id="discussionsFilter" class="rounded-3 m-auto" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
       </div>
     </div>
     <h2 class="mt-3">Discussions</h2>
@@ -54,11 +54,12 @@ let timeout = null;
       return {
         showModalCreate: false,
         subject: null,
-        message: null
+        message: null,
+        userId: parseInt(localStorage.getItem('userId'))
       }
     },
     computed: {
-      ...mapState(['currentDiscussion', 'userId', 'userToken'])
+      ...mapState(['currentDiscussion'])
     },
     methods: {
       closeModalCreate() {
@@ -66,15 +67,12 @@ let timeout = null;
       },
       createDiscussion () {
         this.showModalCreate = false;
-        const config = {
-          headers: { 'Authorization': 'Bearer ' + this.userToken }
-        };
         const bodyParameters = {
           subject: this.subject,
           message: this.message,
-          userId: this.userId
+          userId: parseInt(localStorage.getItem('userId'))
         }
-        axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters, config)
+        axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
         .then(function (response) {
           this.setCurrentDiscussion(response.data.discussion);
           this.updateDiscussions();
@@ -112,7 +110,7 @@ let timeout = null;
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           this.updateDiscussionsFilter(event.target.value);
-        }, 1000);
+        }, 500);
         
       },
       ...mapActions(['setCurrentDiscussion', 'updateDiscussions', 'updateDiscussionsFilter'])

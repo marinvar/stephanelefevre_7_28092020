@@ -35,6 +35,26 @@
         </template>
       </DiscussionComment>
     </div>
+      <form
+        id="createComment"
+        @submit="createComment"
+        method="post"
+      >
+        <div class="input-group p-3">
+          <input
+            type="text"
+            id="createCommentInput"
+            class="form-control"
+            placeholder="Commentaire"
+            @input="commentInput"
+          />
+          <button
+            id="createCommentButton"
+            class="btn btn-success"
+            @click="submitComment"
+          >Envoyer</button>
+        </div>
+      </form>
   </div>
 </template>
 
@@ -43,8 +63,14 @@ import DiscussionHeader from '@/components/DiscussionHeader';
 import DiscussionBody from '@/components/DiscussionBody';
 import DiscussionComment from '@/components/DiscussionComment';
 import { mapState } from 'vuex';
+import axios from 'axios';
 
 export default {
+  data() {
+    return {
+      comment: null,
+    }
+  },
   computed: {
     ...mapState(['currentDiscussion'])
   },
@@ -52,6 +78,30 @@ export default {
     DiscussionHeader,
     DiscussionBody,
     DiscussionComment
+  },
+  methods: {
+    commentInput (e) {
+      this.comment = e.target.value;
+    },
+    submitComment (e) {
+      e.preventDefault();
+      const bodyParameters = {
+        comment: this.comment,
+        author: localStorage.getItem('pseudo') ? localStorage.getItem('pseudo') : 'Anonymous',
+        discussionId: this.currentDiscussion.id
+      }
+      axios.post('http://localhost:3000/api/comment/createComment', bodyParameters)
+      .then(function (response) {
+        console.log(response);
+        /* this.setCurrentDiscussion(response.data.discussion);
+        this.updateDiscussions(); */
+        this.comment = "";
+        document.getElementById('createCommentInput').value = '';
+      }.bind(this))
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 }
 

@@ -5,9 +5,10 @@ const Sequelize = require('sequelize');
 const Comment = require('../models/Comment');
 
 exports.createComment = (req, res, next) => {
+  console.log(req.body);
   const comment = Comment.build({
-    message: req.body.message,
-    author: req.body.subject,
+    comment: req.body.comment,
+    author: req.body.author,
     DiscussionId: req.body.discussionId
   });
   comment.save()
@@ -22,7 +23,8 @@ exports.getComments = (req, res, next) => {
     },
     order: [
       ['created_at', 'DESC']
-    ]
+    ],
+    limit: 10
   })
   .then((comments) => {
     res.status(200).json({ comments })
