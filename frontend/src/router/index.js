@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
+import Logout from '../views/Logout.vue'
+import axios from 'axios'
+
+const userToken = localStorage.getItem('userToken');
+axios.defaults.headers.common['Authorization'] = userToken ? `Bearer ${userToken}` : '';
 
 const routes = [
   {
@@ -18,6 +23,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
   },
   {
     path: '/about',

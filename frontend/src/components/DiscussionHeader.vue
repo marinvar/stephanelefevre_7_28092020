@@ -17,6 +17,6 @@
 <style lang="scss">
 
   hr {
-    margin: 0.1rem;
+    margin: 0.1rem!important;
   }
 </style>

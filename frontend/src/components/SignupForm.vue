@@ -109,11 +109,12 @@ export default {
       lastName: null,
       email: null,
       password: null,
-      passwordConfirm: null
+      passwordConfirm: null,
+      userId: localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null
     }
   },
   computed: {
-    ...mapState(['userId', 'userToken'])
+    ...mapState(['loggedIn'])
   },
   methods: {
     pseudoInput (e) {
@@ -178,8 +179,11 @@ export default {
             password: this.password
           })
           .then(function (response) {
-            this.setUserId(response.data.userId);
-            this.setToken(response.data.token)
+            localStorage.setItem('userId', response.data.userId);
+            localStorage.setItem('userToken', response.data.token);
+            localStorage.setItem('pseudo', this.pseudo);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            this.setLoggedIn(true);
           }.bind(this))
           .catch(function (error) {
             console.log(error);
@@ -191,9 +195,8 @@ export default {
         console.log(error);
       });
     },
-    ...mapActions(['setUserId', 'setToken'])
+    ...mapActions(['setLoggedIn'])
   }
-
 }
 </script>
 

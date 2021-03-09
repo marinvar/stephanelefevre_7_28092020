@@ -23,7 +23,8 @@ exports.getDiscussions = (req, res, next) => {
     },
     order: [
       ['created_at', 'DESC']
-    ]      
+    ],
+    limit: 10
   })
   .then((discussions) => {
     res.status(200).json({ discussions })

@@ -7,7 +7,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const Comment = sequelize.define('Comment', {
-  message: {
+  comment: {
     type: DataTypes.STRING(1550),
     allowNull: false
   },
@@ -32,8 +32,6 @@ const Comment = sequelize.define('Comment', {
     }
   }
 }, {
-  // Other model options go here
-  // tableName: 'Discussions' not needed, by default all names are pluralized
   createdAt: 'created_at',
   updatedAt: 'updated_at'
   

@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Bienvenue sur le réseau social de Groupomania</h1>
+    <h1 class="fs-2">Bienvenue sur le réseau social de Groupomania</h1>
     <p>Vous devez être inscrit pour pouvoir utiliser le réseau.</p>
     <p><router-link to="/login">Connectez-vous</router-link> si c'est déjà le cas, ou
     <br /><router-link to="/signup">Inscrivez-vous</router-link> si ce n'est déjà fait !</p>
