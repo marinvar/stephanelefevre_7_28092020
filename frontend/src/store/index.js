@@ -10,6 +10,7 @@ export default createStore({
       created_at: ": Au tout début..."},
     discussionsFilter: [],
     discussions: [],
+    comments: [],
     loggedIn: false,
   },
   mutations: {
@@ -40,6 +41,15 @@ export default createStore({
       .catch(
         error => console.error('error when loading discussions :', error)
       );
+    },
+    UPDATE_COMMENTS(state) {
+      axios.post('http://localhost:3000/api/comment/getComments', { discussionId: state.currentDiscussion.id })
+      .then(response => {
+        state.comments = response.data.comments;
+      })
+      .catch(
+        error => console.error('error when loading comments :', error)
+      );
     }
   
   },
@@ -58,6 +68,9 @@ export default createStore({
     },
     updateDiscussionsFilter ({ commit }, value) {
       commit('UPDATE_DISCUSSIONS_FILTER', value);
+    },
+    updateComments ({ commit }) {
+      commit('UPDATE_COMMENTS');
     }
   },
   modules: {

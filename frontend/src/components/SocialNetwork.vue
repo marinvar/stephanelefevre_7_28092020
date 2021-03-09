@@ -7,7 +7,7 @@
     </div>
     <div v-else-if="this.userToken !== null && this.userId !== null" class="d-flex flex-fill">
       <DiscussionsPanel />
-      <div id="discussionDisplay" class="mx-auto expanded flex-fill">
+      <div id="discussionDisplay" class="mx-auto expanded flex-fill d-flex flex-column">
         <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau !</h1>
         <DiscussionDisplay />
       </div>

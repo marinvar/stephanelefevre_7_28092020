@@ -5,6 +5,6 @@ const commentCtrl = require('../controllers/comment');
 const auth = require('../middleware/auth');
 
 router.post('/createComment', auth, commentCtrl.createComment);
-router.get('/getComments', auth, commentCtrl.getComments);
+router.post('/getComments', auth, commentCtrl.getComments);
 
 module.exports = router;
