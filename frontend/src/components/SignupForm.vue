@@ -1,7 +1,7 @@
 <template>
   <form 
     id="signupForm"
-    @submit="signupSubmit"
+    @submit.prevent="signupSubmit"
     action="/signup"
     method="post"
   >
@@ -135,8 +135,7 @@ export default {
     passwordConfirmInput (e) {
       this.passwordConfirm = e.target.value;
     },
-    signupSubmit (e) {
-      e.preventDefault();
+    signupSubmit () {
       if (this.pseudo && this.firstName && this.lastName && this.email && this.password && this.passwordConfirm && this.password === this.passwordConfirm) {
         this.submitRequest();
       }

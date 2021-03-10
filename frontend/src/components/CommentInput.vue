@@ -16,14 +16,14 @@
       <button
         id="createCommentButton"
         class="btn btn-success"
-        @click="submitComment"
+        @click.prevent="submitComment"
       >Envoyer</button>
     </div>
   </form>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
 
 export default {
@@ -39,26 +39,23 @@ export default {
     commentInput (e) {
       this.comment = e.target.value;
     },
-    submitComment (e) {
-      e.preventDefault();
-      console.log(this.currentDiscussion);
+    submitComment () {
       const bodyParameters = {
         comment: this.comment,
         author: localStorage.getItem('pseudo') ? localStorage.getItem('pseudo') : 'Anonymous',
         discussionId: this.currentDiscussion.id
       }
       axios.post('http://localhost:3000/api/comment/createComment', bodyParameters)
-      .then(function (response) {
-        console.log(response);
+      .then(function () {
         this.comment = "";
         document.getElementById('createCommentInput').value = '';
-        this.updateComments();
+        this.updateAddedComments(true);
       }.bind(this))
       .catch(function (error) {
         console.log(error);
       });
     },
-    ...mapActions(['updateComments'])
+    ...mapActions(['updateAddedComments'])
   }
 }
 </script>

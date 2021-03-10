@@ -1,5 +1,5 @@
 <template>
-  <div id="discussionsPanel" class="expanded">
+  <div id="discussionsPanel" class="expanded d-flex flex-column">
     <div class="d-flex flex-row-reverse my-2">
       <div class="discussion-icon me-3 expanded" id="discussionsPanelToggle" data-bs-toggle="tooltip" data-bs-placement="top" title="Masquer les discussions" @click="toggleDiscussionPanel">
         <BIconArrowLeftCircle />
@@ -75,7 +75,7 @@ let timeout = null;
         axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
         .then(function (response) {
           this.setCurrentDiscussion(response.data.discussion);
-          this.updateDiscussions();
+          /* this.updateDiscussions(); */
           this.subject = "";
           this.message = "";
         }.bind(this))
@@ -110,10 +110,10 @@ let timeout = null;
         clearTimeout(timeout);
         timeout = setTimeout(() => {
           this.updateDiscussionsFilter(event.target.value);
-        }, 500);
+        }, 1000);
         
       },
-      ...mapActions(['setCurrentDiscussion', 'updateDiscussions', 'updateDiscussionsFilter'])
+      ...mapActions(['setCurrentDiscussion', /* 'updateDiscussions', */ 'updateDiscussionsFilter'])
     },
     components: {
       BIconChatLeftText,
