@@ -1,8 +1,21 @@
 const { Op } = require('sequelize');
 
-const { request } = require('express');
-const Sequelize = require('sequelize');
 const Comment = require('../models/Comment');
+
+const getPagination = (page, size) => {
+  const limit = size ? +size : 6;
+  const offset = page ? page * limit : 0;
+
+  return { limit, offset };
+}
+
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: comments } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return { totalItems, comments, totalPages, currentPage };
+}
 
 exports.createComment = (req, res, next) => {
   console.log(req.body);
@@ -17,17 +30,27 @@ exports.createComment = (req, res, next) => {
 }
 
 exports.getComments = (req, res, next) => {
-  const comments = Comment.findAll({
+  const { page, size, discussionId } = req.query;
+  const { limit, offset } = getPagination(page, size);
+
+  Comment.findAndCountAll({
     where: {
-      DiscussionId: req.body.discussionId
+      DiscussionId: discussionId
     },
     order: [
       ['created_at', 'DESC']
     ],
-    limit: 10
+    limit,
+    offset
   })
-  .then((comments) => {
-    res.status(200).json({ comments })
+  .then(data => {
+    const response = getPagingData(data, page, limit);
+    res.send(response);
   })
-  .catch(error => res.status(400).json({ error }));
-}
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la recherche des commentaires." 
+    });
+  });
+};

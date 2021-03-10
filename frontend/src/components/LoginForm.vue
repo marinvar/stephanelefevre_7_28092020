@@ -1,7 +1,7 @@
 <template>
   <form 
     id="loginForm"
-    @submit="loginSubmit"
+    @submit.prevent="loginSubmit"
     method="post"
   >
     <p>
@@ -60,8 +60,7 @@ export default {
     passwordInput (e) {
       this.password = e.target.value;
     },
-    loginSubmit (e) {
-      e.preventDefault();
+    loginSubmit () {
       axios.post('http://localhost:3000/api/auth/login', { 
         pseudo: this.pseudo,
         password: this.password

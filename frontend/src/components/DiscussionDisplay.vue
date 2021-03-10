@@ -37,7 +37,22 @@
       </DiscussionComment>
     </div>
   </div>
-  <div class="mt-auto">
+  <div id="comments-controls" class="mt-auto">
+    <div class="mt-3">
+      Commentaires par Page:
+      <select v-model="pageSize" @change="handlePageSizeChange($event)">
+        <option v-for="size in pageSizes" :key="size" :value="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+    <v-pagination
+      v-model="page"
+      :pages="totalPages"
+      :range-size="2"
+      active-color="#D1515A"
+      @update:modelValue="handlePageChange"
+    />
     <CommentInput />
   </div>
 </div>
@@ -48,17 +63,86 @@ import DiscussionHeader from '@/components/DiscussionHeader';
 import DiscussionBody from '@/components/DiscussionBody';
 import DiscussionComment from '@/components/DiscussionComment';
 import CommentInput from '@/components/CommentInput';
-import { mapState } from 'vuex';
+import VPagination from 'vue3-pagination';
+import "vue3-pagination/dist/vue3-pagination.css";
+import { mapState, mapActions } from 'vuex';
+import axios from 'axios';
 
 export default {
-  computed: {
-    ...mapState(['currentDiscussion','comments'])
+  data() {
+    return {
+      comments: [],
+      totalPages: 1,
+      discussionId: this.currentDiscussion ? this.currentDiscussion.id : "",
+      page: 1,
+      count: 0,
+      pageSize: 5,
+      pageSizes: [3,5,8,10]
+    }
   },
   components: {
     DiscussionHeader,
     DiscussionBody,
     DiscussionComment,
-    CommentInput
+    CommentInput,
+    VPagination
+  },
+  computed: {
+    ...mapState(['currentDiscussion','addedComments'])
+  },
+  created() {
+    this.$watch('currentDiscussion', () => {
+      this.retrieveComments();
+    }),
+    this.$watch('addedComments', (newVal) => {
+      if (newVal) {
+        this.retrieveComments();
+        this.updateAddedComments(false);
+      }
+    })
+  },
+  methods: {
+    getRequestParams(discussionId, page, pageSize) {
+      let params = {};
+      if (discussionId) {
+        params["discussionId"] = discussionId
+      }
+      if (page) {
+        params["page"] = page - 1;
+      }
+      if (pageSize) {
+        params["size"] = pageSize;
+      }
+      return params;
+    },
+    retrieveComments () {
+      const params = this.getRequestParams(
+        this.currentDiscussion.id,
+        this.page,
+        this.pageSize
+      );
+      axios.get('http://localhost:3000/api/comment/getComments', { params })
+      .then((response) => {
+        const { comments, totalItems, totalPages } = response.data;
+        this.totalPages = totalPages;
+        this.comments = comments;
+        this.count = totalItems;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    },
+    handlePageChange (value) {
+      this.page = value;
+      this.retrieveComments();
+    },
+    handlePageSizeChange(event) {
+      this.pageSize = parseInt(event.target.value);
+      this.page = 1;
+      this.retrieveComments();
+    },
+    ...mapActions(['updateAddedComments'])
+    
   }
 }
 
@@ -72,6 +156,47 @@ p {
 
 .comment-created {
   font-size: 0.7rem;
+}
+
+.Pagination {
+  justify-content: center;
+  margin-bottom: 1rem;
+  .Page {
+    color: white;
+  }
+}
+
+#discussionsPanel {
+  .Pagination {
+    justify-content: center;
+    margin-bottom: 1rem;
+    .Page {
+      color: white;
+    }
+    .Control {
+      fill: #666666;
+      &.Control-active {
+        fill: white;
+      }
+    }      
+  }
+}
+
+
+#comments-controls {
+  background-color: #D4D4D4;
+  button.Page {
+    color: #333333;
+    &.Page-active {
+      color: white;
+    }
+  }
+  .Control {
+    fill: #888888;
+    &.Control-active {
+      fill: 333333;
+    }
+  }    
 }
 
 </style>

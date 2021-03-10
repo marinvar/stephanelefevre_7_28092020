@@ -9,9 +9,9 @@ export default createStore({
       message: "Vous êtes connecté. Sélectionnez une discussion pour l'afficher ici.",
       created_at: ": Au tout début..."},
     discussionsFilter: [],
-    discussions: [],
-    comments: [],
+    /* discussions: [], */
     loggedIn: false,
+    addedComments: false,
   },
   mutations: {
     SET_LOGGED_IN(state, loggedIn) {
@@ -32,24 +32,18 @@ export default createStore({
         error => console.error('error when loading discussions :', error)
       );
     },
-    UPDATE_DISCUSSIONS_FILTER(state, filter) {
+    /* UPDATE_DISCUSSIONS_FILTER(state, filter) {
       state.discussionsFilter = filter.split(' ');
-      axios.post('http://localhost:3000/api/discussion/getDiscussionsFiltered', { filter: state.discussionsFilter })
+      axios.get('http://localhost:3000/api/discussion/getDiscussionsFiltered', { filter: state.discussionsFilter })
       .then(response => {
         state.discussions = response.data.discussions;
       })
       .catch(
         error => console.error('error when loading discussions :', error)
       );
-    },
-    UPDATE_COMMENTS(state) {
-      axios.post('http://localhost:3000/api/comment/getComments', { discussionId: state.currentDiscussion.id })
-      .then(response => {
-        state.comments = response.data.comments;
-      })
-      .catch(
-        error => console.error('error when loading comments :', error)
-      );
+    }, */
+    UPDATE_ADDED_COMMENTS(state, value) {
+      state.addedComments = value;
     }
   
   },
@@ -66,11 +60,11 @@ export default createStore({
     updateDiscussions ({ commit }) {
       commit('UPDATE_DISCUSSIONS');
     },
-    updateDiscussionsFilter ({ commit }, value) {
+    /* updateDiscussionsFilter ({ commit }, value) {
       commit('UPDATE_DISCUSSIONS_FILTER', value);
-    },
-    updateComments ({ commit }) {
-      commit('UPDATE_COMMENTS');
+    }, */
+    updateAddedComments ({ commit }, value) {
+      commit('UPDATE_ADDED_COMMENTS', value);
     }
   },
   modules: {
