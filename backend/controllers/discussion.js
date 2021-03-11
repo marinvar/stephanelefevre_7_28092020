@@ -30,7 +30,12 @@ exports.createDiscussion = (req, res, next) => {
   .then((Discussion) => {
     console.log(Discussion.dataValues);
     res.status(201).json({ discussion: Discussion.dataValues, message: 'Discussion créée !' })})
-  .catch(error => res.status(400).json({ error }));
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la sauvegarde de la discussion." 
+    });
+  });
 }
 
 exports.getDiscussions = (req, res, next) => {
