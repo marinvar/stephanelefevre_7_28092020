@@ -86,22 +86,36 @@
       },
       retrieveDiscussions () {
         const params = this.getRequestParams(
-          this.discussionsFilter,
+          Object.values({...this.discussionsFilter}),
           this.page,
           this.pageSize
         );
+        console.log(params);
         const filteredAddress = 'http://localhost:3000/api/discussion/getDiscussionsFiltered';
         const nonFilteredAddress = 'http://localhost:3000/api/discussion/getDiscussions';
-        (params.filter.length > 0) ? axios.get(filteredAddress, { params }) : axios.get(nonFilteredAddress, { params })
-        .then((response) => {
-          const { discussions, totalItems, totalPages } = response.data;
-          this.totalPages = totalPages;
-          this.discussions = discussions;
-          this.count = totalItems;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        if (params.filter.length > 0) {
+          axios.get(filteredAddress, { params })
+          .then((response) => {
+            const { discussions, totalItems, totalPages } = response.data;
+            this.totalPages = totalPages;
+            this.discussions = discussions;
+            this.count = totalItems;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        } else {
+          axios.get(nonFilteredAddress, { params })
+          .then((response) => {
+            const { discussions, totalItems, totalPages } = response.data;
+            this.totalPages = totalPages;
+            this.discussions = discussions;
+            this.count = totalItems;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
       },
       handlePageChange (value) {
         this.page = value;
