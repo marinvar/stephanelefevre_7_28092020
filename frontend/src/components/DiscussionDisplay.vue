@@ -3,7 +3,7 @@
   <div>
     <DiscussionHeader>
       <template v-slot:subject>
-        <div class="discussion-subject fs-3" v-bind:title="currentDiscussion.subject">
+        <div id="discussionTitle" class="discussion-subject fs-3" v-bind:title="currentDiscussion.subject">
           {{ currentDiscussion.subject }}
         </div>
       </template>
@@ -76,8 +76,8 @@ export default {
       discussionId: this.currentDiscussion ? this.currentDiscussion.id : "",
       page: 1,
       count: 0,
-      pageSize: 5,
-      pageSizes: [3,5,8,10]
+      pageSize: 6,
+      pageSizes: [4,6,8,10,12]
     }
   },
   components: {
@@ -88,16 +88,16 @@ export default {
     VPagination
   },
   computed: {
-    ...mapState(['currentDiscussion','addedComments'])
+    ...mapState(['currentDiscussion','addedComment'])
   },
   created() {
     this.$watch('currentDiscussion', () => {
       this.retrieveComments();
     }),
-    this.$watch('addedComments', (newVal) => {
+    this.$watch('addedComment', (newVal) => {
       if (newVal) {
         this.retrieveComments();
-        this.updateAddedComments(false);
+        this.updateAddedComment(false);
       }
     })
   },
@@ -141,7 +141,7 @@ export default {
       this.page = 1;
       this.retrieveComments();
     },
-    ...mapActions(['updateAddedComments'])
+    ...mapActions(['updateAddedComment'])
     
   }
 }
@@ -197,6 +197,10 @@ p {
       fill: 333333;
     }
   }    
+}
+
+#discussionTitle {
+  color: #D1515A;
 }
 
 </style>

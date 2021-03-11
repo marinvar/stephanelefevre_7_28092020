@@ -30,6 +30,10 @@ const Discussion = sequelize.define('Discussion', {
       const dateAndTime = rawData.toJSON().slice(0,10).split('-').reverse().join('/') + ' à ' + ('00' + rawData.getHours()).slice(-2) + 'h ' + ('00' + rawData.getMinutes()).slice(-2) + 'min ' + ('00' + rawData.getSeconds()).slice(-2) + 's';
       return dateAndTime;
     }
+  },
+  UserId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   // Other model options go here
@@ -38,7 +42,5 @@ const Discussion = sequelize.define('Discussion', {
   updatedAt: 'updated_at'
   
 });
-
-
 
 module.exports = Discussion;

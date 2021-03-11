@@ -27,7 +27,9 @@ exports.createDiscussion = (req, res, next) => {
     UserId: req.body.userId
   });
   discussion.save()
-  .then(() => res.status(201).json({ message: 'Discussion créée !' }))
+  .then((Discussion) => {
+    console.log(Discussion.dataValues);
+    res.status(201).json({ discussion: Discussion.dataValues, message: 'Discussion créée !' })})
   .catch(error => res.status(400).json({ error }));
 }
 
@@ -85,6 +87,9 @@ exports.getDiscussionsFiltered = (req, res, next) => {
         }
       ]
     },
+    order: [
+      ['created_at', 'DESC']
+    ],
     include: { model: User,
                attributes: ['pseudo'],
               }

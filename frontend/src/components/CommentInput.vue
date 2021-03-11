@@ -49,13 +49,13 @@ export default {
       .then(function () {
         this.comment = "";
         document.getElementById('createCommentInput').value = '';
-        this.updateAddedComments(true);
+        this.updateAddedComment(true);
       }.bind(this))
       .catch(function (error) {
         console.log(error);
       });
     },
-    ...mapActions(['updateAddedComments'])
+    ...mapActions(['updateAddedComment'])
   }
 }
 </script>

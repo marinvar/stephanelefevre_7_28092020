@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column flex-fill">
-    <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussions my-3 mx-3" @click="selectDiscussion(discussion)">
+  <div id="discussionsTab" class="d-flex flex-column flex-fill">
+    <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussion my-1 mx-3" @click="selectDiscussion(discussion)">
       <DiscussionHeader>
         <template v-slot:subject>
           <div class="discussion-subject" v-bind:title="discussion.subject">
@@ -49,23 +49,23 @@
         totalPages: 1,
         page: 1,
         count: 0,
-        pageSize: 5,
-        pageSizes: [3,5,8,10]
+        pageSize: 6,
+        pageSizes: [4,6,8,10]
       }
     },
     created() {
       this.$watch('discussionsFilter', () => {
         this.retrieveDiscussions();
-      })/* ,
-      this.$watch('addedComments', (newVal) => {
+      }),
+      this.$watch('addedDiscussion', (newVal) => {
         if (newVal) {
-          this.retrieveComments();
-          this.updateAddedComments(false);
+          this.retrieveDiscussions();
+          this.updateAddedDiscussion(false);
         }
-      }) */
+      })
     },
     computed: {
-      ...mapState([ 'currentDiscussion','discussionsFilter' ])
+      ...mapState([ 'currentDiscussion','discussionsFilter','addedDiscussion' ])
     },
     methods: {
       selectDiscussion (discussion) {
@@ -126,7 +126,7 @@
         this.page = 1;
         this.retrieveDiscussions();
       },
-      ...mapActions(['setCurrentDiscussion'])
+      ...mapActions(['setCurrentDiscussion','updateAddedDiscussion'])
     },
     beforeMount() {
       this.retrieveDiscussions();
@@ -140,10 +140,6 @@
 
 <style lang="scss">
 
-  .discussions {
-    cursor: pointer;
-  }
-
   .discussions-subject {
     font-size: 1.2rem;
   }
@@ -156,6 +152,25 @@
 
   .discussions-creation {
     font-size: 0.7rem;
+  }
+
+  #discussionsPanel {
+    #discussionsTab {
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+      flex-wrap: wrap;
+      transition: 0.4s;
+    }
+    &.expanded {
+      #discussionsTab {
+        pointer-events: unset;
+        opacity: 1;
+      }
+      .discussion {
+        cursor: pointer;
+      }
+    }
   }
 
 

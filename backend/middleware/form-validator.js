@@ -5,7 +5,7 @@ const formValidator = (req, res, next) => {
 
   const regX = /[^\p{L}\s\d'-]+/ug;
   
-  const sauceObject = req.file ? {
+  const identObject = req.file ? {
     ...JSON.parse(req.body.sauce)
   } : { ...req.body };
 

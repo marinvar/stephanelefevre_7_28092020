@@ -67,6 +67,11 @@ let timeout = null;
       },
       createDiscussion () {
         this.showModalCreate = false;
+        const input = document.getElementById('discussionsFilter');
+        if (input.classList.contains('expanded')) {
+          this.updateDiscussionsFilter('');
+          input.value = '';
+        }
         const bodyParameters = {
           subject: this.subject,
           message: this.message,
@@ -75,7 +80,7 @@ let timeout = null;
         axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
         .then(function (response) {
           this.setCurrentDiscussion(response.data.discussion);
-          /* this.updateDiscussions(); */
+          this.updateAddedDiscussion(true);
           this.subject = "";
           this.message = "";
         }.bind(this))
@@ -113,7 +118,7 @@ let timeout = null;
         }, 1000);
         
       },
-      ...mapActions(['setCurrentDiscussion', /* 'updateDiscussions', */ 'updateDiscussionsFilter'])
+      ...mapActions(['setCurrentDiscussion', 'updateDiscussionsFilter','updateAddedDiscussion'])
     },
     components: {
       BIconChatLeftText,

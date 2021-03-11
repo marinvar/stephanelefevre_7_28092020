@@ -25,30 +25,6 @@
     </p>
 
     <p class="p-0">
-      <label for="firstName">Prénom</label>
-      <input
-        class="mx-auto"
-        type="text"
-        id="firstName"
-        v-model="firstName"
-        name="firstName"
-        @input="firstNameInput"
-      >
-    </p>
-
-    <p class="p-0">
-      <label for="lastName">Nom</label>
-      <input
-        class="mx-auto"
-        type="text"
-        id="lastName"
-        v-model="lastName"
-        name="lastName"
-        @input="lastNameInput"
-      >
-    </p>
-
-    <p class="p-0">
       <label for="email">Email</label>
       <input
         class="mx-auto"
@@ -105,8 +81,6 @@ export default {
     return {
       errors: [],
       pseudo: null,
-      firstName: null,
-      lastName: null,
       email: null,
       password: null,
       passwordConfirm: null,
@@ -120,12 +94,6 @@ export default {
     pseudoInput (e) {
       this.pseudo = e.target.value;
     },
-    firstNameInput (e) {
-      this.firstName = e.target.value;
-    },
-    lastNameInput (e) {
-      this.lastName = e.target.value;
-    },
     emailInput (e) {
       this.email = e.target.value;
     },
@@ -136,18 +104,12 @@ export default {
       this.passwordConfirm = e.target.value;
     },
     signupSubmit () {
-      if (this.pseudo && this.firstName && this.lastName && this.email && this.password && this.passwordConfirm && this.password === this.passwordConfirm) {
+      if (this.pseudo && this.email && this.password && this.passwordConfirm && this.password === this.passwordConfirm) {
         this.submitRequest();
       }
       this.errors = [];
       if (!this.pseudo) {
         this.errors.push('Pseudo requis.');
-      }
-      if (!this.firstName) {
-        this.errors.push('Prénom requis.');
-      }
-      if (!this.lastName) {
-        this.errors.push('Nom requis.');
       }
       if (!this.email) {
         this.errors.push('Email requis.');
@@ -166,8 +128,6 @@ export default {
     submitRequest () {
       axios.post('http://localhost:3000/api/auth/signup', { 
         pseudo: this.pseudo,
-        firstName: this.firstName,
-        lastName: this.lastName,
         email: this.email,
         password: this.password
       })
