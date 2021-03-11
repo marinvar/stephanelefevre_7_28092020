@@ -28,7 +28,6 @@ exports.createDiscussion = (req, res, next) => {
   });
   discussion.save()
   .then((Discussion) => {
-    console.log(Discussion.dataValues);
     res.status(201).json({ discussion: Discussion.dataValues, message: 'Discussion créée !' })})
   .catch(error => {
     res.status(500).send({

@@ -16,7 +16,6 @@ const getPagingData = (data, page, limit) => {
 }
 
 exports.createComment = (req, res, next) => {
-  console.log(req.body);
   const comment = Comment.build({
     comment: req.body.comment,
     author: req.body.author,

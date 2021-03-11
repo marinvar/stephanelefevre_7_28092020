@@ -3,25 +3,26 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const history = require('connect-history-api-fallback');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
+/* const bcrypt = require('bcrypt');
+const crypto = require('crypto'); */
 
 const { dbConnect, dbTablesSync } = require('./db-setup');
+const { insertData } = require('./db-insert');
 
 /* const saucesRoutes = require('./routes/sauces'); */
 const userRoutes = require('./routes/user');
 const discussionRoutes = require('./routes/discussion');
 const commentRoutes = require('./routes/comment');
-const User = require('./models/User');
+/* const User = require('./models/User');
 const Discussion = require('./models/Discussion');
-const Comment = require('./models/Comment');
+const Comment = require('./models/Comment'); */
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'mysql'
 });
 
-const encryptEmail = (email) => {
+/* const encryptEmail = (email) => {
   const secret = process.env.EMAIL_PASS;
   return crypto.createHmac('sha256', secret)
                          .update(email)
@@ -32,12 +33,17 @@ const encryptPseudo = (pseudo) => {
   const secret = process.env.PSEUDO_PASS;
   const concat = pseudo + '_' + secret;
   return Buffer.from(concat).toString('hex');
-}
+} */
 
 dbConnect()
-.then(() => dbTablesSync())
-.catch(error => console.error('Problem during the models synchronization : ', error))
 .then(() => {
+  dbTablesSync()
+  .then(() => {
+    insertData()
+  })
+})
+.catch(error => console.error('Problem during the models synchronization : ', error));
+/* .then(() => {
   bcrypt.hash("rhMAST3R", 10)
   .then(hash1 => {
     User.bulkCreate([
@@ -115,9 +121,9 @@ dbConnect()
       })
     })
   })
-})
+}) */
 
-.catch(error => console.error('Problem during data bulk creation : ', error))
+/* .catch(error => console.error('Problem during data bulk creation : ', error)) */
 
 const app = express();
 
