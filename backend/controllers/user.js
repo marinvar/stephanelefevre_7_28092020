@@ -42,9 +42,19 @@ exports.login = (req, res, next) => {
         )
       });
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => {
+      res.status(500).send({
+         message:
+          error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
+      });
+    });
   })
-  .catch(error => res.status(500).json({ error }));
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
+    });
+  });
 };
 
 /**
@@ -58,7 +68,13 @@ exports.signout = (req, res, next) => {
     }
     User.destroy({ where: { email: req.body.email } })
     .then(()=> res.status(200).json({ message: 'Utilisateur effacé !' }))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => {
+      message:
+       error.message || "Une erreur est survenue lors de la suppression de l'utilisateur." 
+   });
   })
-  .catch(error => res.status(500).json({ error }));
+  .catch(error => {
+    message:
+     error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
+ });
 };

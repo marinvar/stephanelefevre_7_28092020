@@ -1,5 +1,3 @@
-const { Op } = require('sequelize');
-
 const Comment = require('../models/Comment');
 
 const getPagination = (page, size) => {
@@ -26,7 +24,12 @@ exports.createComment = (req, res, next) => {
   });
   comment.save()
   .then(() => res.status(201).json({ message: 'Commentaire créé !' }))
-  .catch(error => res.status(400).json({ error }));
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la sauvegarde du commentaire." 
+    });
+  });
 }
 
 exports.getComments = (req, res, next) => {

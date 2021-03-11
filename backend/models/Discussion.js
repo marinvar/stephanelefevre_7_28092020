@@ -9,7 +9,6 @@ const Discussion = sequelize.define('Discussion', {
   subject: {
     type: DataTypes.STRING,
     allowNull: false, // defaults to true
-    unique: true
   },
   message: {
     type: DataTypes.STRING(1550),

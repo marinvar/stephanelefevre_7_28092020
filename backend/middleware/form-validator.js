@@ -5,18 +5,33 @@ const formValidator = (req, res, next) => {
 
   const regX = /[^\p{L}\s\d'-]+/ug;
   
-  const identObject = req.file ? {
+  /* const sauceObject = req.file ? {
     ...JSON.parse(req.body.sauce)
-  } : { ...req.body };
+  } : { ...req.body }; */
+  const parsedObject = { ...req.body };
 
-  sauceObject.name = sauceObject.name.replace(regX, '');
-  sauceObject.userId = sauceObject.userId.replace(regX, '');
-  sauceObject.heat = parseFloat(sauceObject.heat.toString().replace(/[^0-9]+/g, ''));
-  sauceObject.description = sauceObject.description.replace(regX, '');
-  sauceObject.mainPepper = sauceObject.mainPepper.replace(regX, '');
-  sauceObject.manufacturer = sauceObject.manufacturer.replace(regX, '');
+  if (parsedObject.subject) {
+    parsedObject.subject = parsedObject.subject.replace(regX, '');
+  }
+  if (parsedObject.message) {
+    parsedObject.message = parsedObject.message.replace(regX, '');
+  }
+  if (parsedObject.comment) {
+    parsedObject.comment = parsedObject.comment.replace(regX, '');
+  }
+  if (parsedObject.author) {
+    parsedObject.author = parsedObject.author.replace(regX, '');
+  }
+  if (parsedObject.discussionId) {
+    parsedObject.discussionId = parseInt(parsedObject.discussionId.toString().replace(/[^0-9]+/g, ''));
+  }
+  if (parsedObject.userId) {
+    parsedObject.userId = parseInt(parsedObject.userId.toString().replace(/[^0-9]+/g, ''));
+  }
 
-  req.file ? req.body.sauce = JSON.stringify(sauceObject) : req.body = sauceObject;
+  req.body = parsedObject;
+
+  /* req.file ? req.body.sauce = JSON.stringify(sauceObject) : req.body = sauceObject; */
   
   next();
 }

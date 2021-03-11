@@ -90,7 +90,6 @@
           this.page,
           this.pageSize
         );
-        console.log(params);
         const filteredAddress = 'http://localhost:3000/api/discussion/getDiscussionsFiltered';
         const nonFilteredAddress = 'http://localhost:3000/api/discussion/getDiscussions';
         if (params.filter.length > 0) {

@@ -7,14 +7,6 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const User = sequelize.define('User', {
-  /* first_name: {
-    type: DataTypes.STRING,
-    allowNull: false // defaults to true
-  },
-  last_name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }, */
   pseudo: {
     type: DataTypes.STRING,
     allowNull: false,

@@ -67,7 +67,7 @@ export default createStore({
       commit('UPDATE_DISCUSSIONS_FILTER', value);
     },
     updateAddedComment ({ commit }, value) {
-      commit('UPDATE_ADDED_COMMENTS', value);
+      commit('UPDATE_ADDED_COMMENT', value);
     },
     updateAddedDiscussion ({ commit }, value) {
       commit('UPDATE_ADDED_DISCUSSION', value);
