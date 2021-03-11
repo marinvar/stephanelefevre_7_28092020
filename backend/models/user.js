@@ -7,14 +7,14 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 });
 
 const User = sequelize.define('User', {
-  first_name: {
+  /* first_name: {
     type: DataTypes.STRING,
     allowNull: false // defaults to true
   },
   last_name: {
     type: DataTypes.STRING,
     allowNull: false
-  },
+  }, */
   pseudo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -28,6 +28,10 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   // Other model options go here

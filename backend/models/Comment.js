@@ -30,6 +30,10 @@ const Comment = sequelize.define('Comment', {
       const dateAndTime = rawData.toJSON().slice(0,10).split('-').reverse().join('/') + ' à ' + ('00' + rawData.getHours()).slice(-2) + 'h ' + ('00' + rawData.getMinutes()).slice(-2) + 'min ' + ('00' + rawData.getSeconds()).slice(-2) + 's';
       return dateAndTime;
     }
+  },
+  DiscussionId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   createdAt: 'created_at',

@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column flex-fill">
-    <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussions my-3 mx-3" @click="selectDiscussion(discussion)">
+  <div id="discussionsTab" class="d-flex flex-column flex-fill">
+    <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussion my-1 mx-3" @click="selectDiscussion(discussion)">
       <DiscussionHeader>
         <template v-slot:subject>
           <div class="discussion-subject" v-bind:title="discussion.subject">
@@ -49,23 +49,23 @@
         totalPages: 1,
         page: 1,
         count: 0,
-        pageSize: 5,
-        pageSizes: [3,5,8,10]
+        pageSize: 6,
+        pageSizes: [4,6,8,10]
       }
     },
     created() {
       this.$watch('discussionsFilter', () => {
         this.retrieveDiscussions();
-      })/* ,
-      this.$watch('addedComments', (newVal) => {
+      }),
+      this.$watch('addedDiscussion', (newVal) => {
         if (newVal) {
-          this.retrieveComments();
-          this.updateAddedComments(false);
+          this.retrieveDiscussions();
+          this.updateAddedDiscussion(false);
         }
-      }) */
+      })
     },
     computed: {
-      ...mapState([ 'currentDiscussion','discussionsFilter' ])
+      ...mapState([ 'currentDiscussion','discussionsFilter','addedDiscussion' ])
     },
     methods: {
       selectDiscussion (discussion) {
@@ -86,22 +86,36 @@
       },
       retrieveDiscussions () {
         const params = this.getRequestParams(
-          this.discussionsFilter,
+          Object.values({...this.discussionsFilter}),
           this.page,
           this.pageSize
         );
+        console.log(params);
         const filteredAddress = 'http://localhost:3000/api/discussion/getDiscussionsFiltered';
         const nonFilteredAddress = 'http://localhost:3000/api/discussion/getDiscussions';
-        (params.filter.length > 0) ? axios.get(filteredAddress, { params }) : axios.get(nonFilteredAddress, { params })
-        .then((response) => {
-          const { discussions, totalItems, totalPages } = response.data;
-          this.totalPages = totalPages;
-          this.discussions = discussions;
-          this.count = totalItems;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        if (params.filter.length > 0) {
+          axios.get(filteredAddress, { params })
+          .then((response) => {
+            const { discussions, totalItems, totalPages } = response.data;
+            this.totalPages = totalPages;
+            this.discussions = discussions;
+            this.count = totalItems;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        } else {
+          axios.get(nonFilteredAddress, { params })
+          .then((response) => {
+            const { discussions, totalItems, totalPages } = response.data;
+            this.totalPages = totalPages;
+            this.discussions = discussions;
+            this.count = totalItems;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
       },
       handlePageChange (value) {
         this.page = value;
@@ -112,7 +126,7 @@
         this.page = 1;
         this.retrieveDiscussions();
       },
-      ...mapActions(['setCurrentDiscussion'])
+      ...mapActions(['setCurrentDiscussion','updateAddedDiscussion'])
     },
     beforeMount() {
       this.retrieveDiscussions();
@@ -126,10 +140,6 @@
 
 <style lang="scss">
 
-  .discussions {
-    cursor: pointer;
-  }
-
   .discussions-subject {
     font-size: 1.2rem;
   }
@@ -142,6 +152,25 @@
 
   .discussions-creation {
     font-size: 0.7rem;
+  }
+
+  #discussionsPanel {
+    #discussionsTab {
+      pointer-events: none;
+      opacity: 0;
+      overflow: hidden;
+      flex-wrap: wrap;
+      transition: 0.4s;
+    }
+    &.expanded {
+      #discussionsTab {
+        pointer-events: unset;
+        opacity: 1;
+      }
+      .discussion {
+        cursor: pointer;
+      }
+    }
   }
 
 
