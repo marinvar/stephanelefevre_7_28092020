@@ -101,7 +101,11 @@
             this.count = totalItems;
           })
           .catch((error) => {
+            if (error.response.status === 401) {
+            this.identify401(error);
+          } else {
             console.log(error);
+          }
           });
         } else {
           axios.get(nonFilteredAddress, { params })
@@ -112,7 +116,11 @@
             this.count = totalItems;
           })
           .catch((error) => {
-            console.log(error);
+            if (error.response.status === 401) {
+              this.identify401(error);
+            } else {
+              console.log(error);
+            }
           });
         }
       },
@@ -125,7 +133,7 @@
         this.page = 1;
         this.retrieveDiscussions();
       },
-      ...mapActions(['setCurrentDiscussion','updateAddedDiscussion'])
+      ...mapActions(['setCurrentDiscussion','updateAddedDiscussion','identify401'])
     },
     beforeMount() {
       this.retrieveDiscussions();

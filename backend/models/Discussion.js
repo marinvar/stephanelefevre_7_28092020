@@ -30,6 +30,10 @@ const Discussion = sequelize.define('Discussion', {
       return dateAndTime;
     }
   },
+  delete_flag: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   UserId: {
     type: DataTypes.INTEGER,
     allowNull: false

@@ -11,6 +11,6 @@ const passwordStrength = require('../middleware/password-strength');
 
 router.post('/signup', passwordStrength, mailValidator, mailCrypter, pseudoCrypter, userCtrl.signup);
 router.post('/login', loginSlowdown, pseudoCrypter, userCtrl.login);
-router.post('/signout', auth, mailValidator, pseudoCrypter, userCtrl.signout);
+router.post('/signout', auth, pseudoCrypter, userCtrl.signout);
 
 module.exports = router;

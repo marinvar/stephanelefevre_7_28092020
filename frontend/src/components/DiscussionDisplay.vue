@@ -128,8 +128,12 @@ export default {
         this.comments = comments;
         this.count = totalItems;
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        if (error.response.status === 401) {
+            this.identify401(error);
+          } else {
+            console.log(error);
+          }
       });
     },
     handlePageChange (value) {
@@ -141,7 +145,7 @@ export default {
       this.page = 1;
       this.retrieveComments();
     },
-    ...mapActions(['updateAddedComment'])
+    ...mapActions(['updateAddedComment','identify401'])
     
   }
 }

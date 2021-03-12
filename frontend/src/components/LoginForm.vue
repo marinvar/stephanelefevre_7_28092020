@@ -1,42 +1,47 @@
 <template>
-  <form 
-    id="loginForm"
-    @submit.prevent="loginSubmit"
-    method="post"
-  >
-    <p>
-      <label for="pseudo">Pseudo</label>
-      <input
-        class="mx-auto"
-        type="text"
-        id="pseudo"
-        v-model="pseudo"
-        name="pseudo"
-        @input="pseudoInput"
-      >
-    </p>
+  <div>
+    <form 
+      id="loginForm"
+      @submit.prevent="loginSubmit"
+      method="post"
+    >
+      <p>
+        <label for="pseudo">Pseudo</label>
+        <input
+          class="mx-auto"
+          type="text"
+          id="pseudo"
+          v-model="pseudo"
+          name="pseudo"
+          @input="pseudoInput"
+        >
+      </p>
 
-    <p>
-      <label for="password">Mot de passe</label>
-      <input
-        class="mx-auto"
-        type="password"
-        id="password"
-        v-model="password"
-        name="password"
-        @input="passwordInput"
-      >
-    </p>
+      <p>
+        <label for="password">Mot de passe</label>
+        <input
+          class="mx-auto"
+          type="password"
+          id="password"
+          v-model="password"
+          name="password"
+          @input="passwordInput"
+        >
+      </p>
 
-    <p>
-      <input
-        class="mx-auto"
-        type="submit"
-        value="Se connecter"
-      >
-    </p>
+      <p>
+        <input
+          class="mx-auto"
+          type="submit"
+          value="Se connecter"
+        >
+      </p>
 
-  </form>
+    </form>
+    <div class="bad-login" v-if="badLogin = true">
+      {{ errorMessage }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,6 +51,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      badLogin: false,
+      errorMessage: null,
       pseudo: null,
       password: null
     }
@@ -71,11 +78,15 @@ export default {
         localStorage.setItem('pseudo', this.pseudo);
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.setLoggedIn(true);
+        this.badLogin = false;
+        this.errorMessage = null;
         this.$router.push('/');
       }.bind(this))
       .catch(function (error) {
-        console.log(error);
-      });
+        console.log(error.response);
+            this.badLogin = true;
+            this.errorMessage = error.response.data.error;
+      }.bind(this));
     },
     ...mapActions(['setLoggedIn'])
   }
@@ -86,5 +97,10 @@ export default {
 <style>
   input, label {
     display: block;
+  }
+
+  .bad-login {
+    color: #D1515A;
+    font-weight: 600;
   }
 </style>

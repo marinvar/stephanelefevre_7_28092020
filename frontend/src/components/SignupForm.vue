@@ -1,74 +1,80 @@
 <template>
-  <form 
-    id="signupForm"
-    @submit.prevent="signupSubmit"
-    action="/signup"
-    method="post"
-  >
-    <p v-if="errors.length">
-      <b>Veuillez corriger l'(les) erreur(s) suivante(s) :</b>
-      <ul>
-        <li v-bind:key="error" v-for="error in errors">{{ error }}</li>
-      </ul>
-    </p>
+  <div>
+    <form 
+      id="signupForm"
+      @submit.prevent="signupSubmit"
+      action="/signup"
+      method="post"
+    >
+      <p v-if="errors.length">
+        <b>Veuillez corriger l'(les) erreur(s) suivante(s) :</b>
+        <ul>
+          <li v-bind:key="error" v-for="error in errors">{{ error }}</li>
+        </ul>
+      </p>
 
-    <p class="p-0">
-      <label for="pseudo">Pseudo</label>
-      <input
-        class="mx-auto"
-        type="text"
-        id="pseudo"
-        v-model="pseudo"
-        name="pseudo"
-        @input="pseudoInput"
-      >
-    </p>
+      <p class="p-0">
+        <label for="pseudo">Pseudo</label>
+        <input
+          class="mx-auto"
+          type="text"
+          id="pseudo"
+          v-model="pseudo"
+          name="pseudo"
+          @input="pseudoInput"
+        >
+      </p>
 
-    <p class="p-0">
-      <label for="email">Email</label>
-      <input
-        class="mx-auto"
-        type="email"
-        id="email"
-        v-model="email"
-        name="email"
-        @input="emailInput"
-      >
-    </p>
+      <p class="p-0">
+        <label for="email">Email</label>
+        <input
+          class="mx-auto"
+          type="email"
+          id="email"
+          v-model="email"
+          name="email"
+          @input="emailInput"
+        >
+      </p>
 
-    <p class="p-0">
-      <label for="password">Mot de passe</label>
-      <input
-        class="mx-auto"
-        type="password"
-        id="password"
-        v-model="password"
-        name="password"
-        @input="passwordInput"
-      >
-    </p>
+      <p class="p-0">
+        <label for="password">Mot de passe</label>
+        <input
+          class="mx-auto"
+          type="password"
+          id="password"
+          v-model="password"
+          name="password"
+          @input="passwordInput"
+        >
+      </p>
 
-    <p class="p-0">
-      <label for="passwordConfirm">Confirmer le mot de passe</label>
-      <input
-        class="mx-auto"
-        type="password"
-        id="passwordConfirm"
-        v-model="passwordConfirm"
-        name="passwordConfirm"
-        @input="passwordConfirmInput"
-      >
-    </p>
+      <p class="p-0">
+        <label for="passwordConfirm">Confirmer le mot de passe</label>
+        <input
+          class="mx-auto"
+          type="password"
+          id="passwordConfirm"
+          v-model="passwordConfirm"
+          name="passwordConfirm"
+          @input="passwordConfirmInput"
+        >
+      </p>
 
-    <p class="p-0">
-      <input
-        class="mx-auto"
-        type="submit"
-        value="S'inscrire"
-      >
-    </p>
+      <p class="p-0">
+        <input
+          class="mx-auto"
+          type="submit"
+          value="S'inscrire"
+        >
+      </p>
 
-  </form>
+    </form>
+    <div class="bad-login" v-if="badLogin = true">
+      {{ errorMessage }}
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -79,12 +85,14 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      badLogin: false,
+      errorMessage: null,
       errors: [],
       pseudo: null,
       email: null,
       password: null,
       passwordConfirm: null,
-      userId: localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null
+      userId: null/* localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null */
     }
   },
   computed: {
@@ -143,11 +151,15 @@ export default {
             localStorage.setItem('pseudo', this.pseudo);
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             this.setLoggedIn(true);
+            this.badLogin = false;
+            this.errorMessage = null;
+            this.$router.push('/');
           }.bind(this))
           .catch(function (error) {
-            console.log(error);
+            console.log(error.response);
+            this.badLogin = true;
+            this.errorMessage = error.response.json;
           });
-          this.$router.push('/');
         }
       }.bind(this))
       .catch(function (error) {

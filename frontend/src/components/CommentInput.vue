@@ -52,10 +52,14 @@ export default {
         this.updateAddedComment(true);
       }.bind(this))
       .catch(function (error) {
-        console.log(error);
+        if (error.response.status === 401) {
+            this.identify401(error);
+          } else {
+            console.log(error);
+          }
       });
     },
-    ...mapActions(['updateAddedComment'])
+    ...mapActions(['updateAddedComment','identify401'])
   }
 }
 </script>

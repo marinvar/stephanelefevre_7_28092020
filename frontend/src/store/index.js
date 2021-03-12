@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import axios from 'axios';
+import router from '../router'
   
 export default createStore({
   state: {
@@ -16,6 +16,20 @@ export default createStore({
   mutations: {
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
+      if (!loggedIn) {
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
+      }
+    },
+    IDENTIFY_401(state, error) {
+      if (error.response.data.error.name === "TokenExpiredError" || error.response.data.error.name === "Utilisateur non trouvé !") {
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
+        state.loggedIn = false;
+        router.push('/login');
+      }
     },
     SET_CURRENT_DISCUSSION(state, discussion) {
       state.currentDiscussion = discussion;
@@ -23,24 +37,8 @@ export default createStore({
     ADD_DISCUSSION(state, discussion) {
       state.discussions.push(discussion);
     },
-    UPDATE_DISCUSSIONS(state) {
-      axios.get('http://localhost:3000/api/discussion/getDiscussions')
-      .then(response => {
-        state.discussions = response.data.discussions;
-      })
-      .catch(
-        error => console.error('error when loading discussions :', error)
-      );
-    },
     UPDATE_DISCUSSIONS_FILTER(state, filter) {
       state.discussionsFilter = filter.split(' ');
-      /* axios.get('http://localhost:3000/api/discussion/getDiscussionsFiltered', { filter: state.discussionsFilter })
-      .then(response => {
-        state.discussions = response.data.discussions;
-      })
-      .catch(
-        error => console.error('error when loading discussions :', error)
-      ); */
     },
     UPDATE_ADDED_COMMENT(state, value) {
       state.addedComment = value;
@@ -54,14 +52,14 @@ export default createStore({
     setLoggedIn ({ commit }, value) {
       commit('SET_LOGGED_IN', value);
     },
+    identify401 ({ commit }, value) {
+      commit('IDENTIFY_401', value);
+    },
     setCurrentDiscussion ({ commit }, value) {
       commit('SET_CURRENT_DISCUSSION', value);
     },
     addDiscussion ({ commit }, value) {
       commit('ADD_DISCUSSION', value);
-    },
-    updateDiscussions ({ commit }) {
-      commit('UPDATE_DISCUSSIONS');
     },
     updateDiscussionsFilter ({ commit }, value) {
       commit('UPDATE_DISCUSSIONS_FILTER', value);
