@@ -84,8 +84,12 @@ let timeout = null;
           this.subject = "";
           this.message = "";
         }.bind(this))
-        .catch(function (error) {
-          console.log(error);
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.identify401(error);
+          } else {
+            console.log(error);
+          }
         });
       },
       toggleDiscussionPanel () {
@@ -118,7 +122,7 @@ let timeout = null;
         }, 1000);
         
       },
-      ...mapActions(['setCurrentDiscussion', 'updateDiscussionsFilter','updateAddedDiscussion'])
+      ...mapActions(['setCurrentDiscussion', 'updateDiscussionsFilter','updateAddedDiscussion','identify401'])
     },
     components: {
       BIconChatLeftText,

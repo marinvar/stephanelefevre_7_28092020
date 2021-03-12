@@ -31,6 +31,10 @@ const Comment = sequelize.define('Comment', {
       return dateAndTime;
     }
   },
+  delete_flag: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
   DiscussionId: {
     type: DataTypes.INTEGER,
     allowNull: false

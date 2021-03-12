@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
+import Signout from '../views/Signout.vue'
 import axios from 'axios'
 
 const userToken = localStorage.getItem('userToken');
@@ -28,6 +29,11 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: Logout
+  },
+  {
+    path: '/signout',
+    name: 'Signout',
+    component: Signout
   },
   {
     path: '/about',

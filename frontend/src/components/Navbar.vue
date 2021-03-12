@@ -5,9 +5,10 @@
     </router-link>
     <div id="nav">
       <router-link to="/">Accueil</router-link>
-      <router-link to="/signup" v-if="!this.loggedIn">Inscription</router-link>
       <router-link to="/login" v-if="!this.loggedIn">Connexion</router-link>
       <router-link to="/logout" v-if="this.loggedIn">Déconnexion</router-link>
+      <router-link to="/signup" v-if="!this.loggedIn">Inscription</router-link>
+      <router-link to="/signout" v-if="this.loggedIn">Désinscription</router-link>
       <router-link to="/about">À propos</router-link>
     </div>
   </div>
