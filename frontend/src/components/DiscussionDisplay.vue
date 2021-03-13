@@ -20,8 +20,8 @@
         </p>
       </template>
     </DiscussionBody>
-    <hr>
-    <h2 class="fs-5 mt-5">Commentaires</h2>
+    <div class="demark mt-5"></div>
+    <h2 class="fs-5 mt-2">Commentaires</h2>
     <div v-for="comment in comments" v-bind:key="comment.id" >
       <DiscussionComment>
         <template v-slot:message>

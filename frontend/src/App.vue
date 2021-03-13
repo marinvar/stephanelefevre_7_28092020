@@ -1,9 +1,9 @@
 <template>
   <div class="vh-100 d-flex flex-column">
     <Navbar />
-    <div id="demark"></div>
+    <div class="demark"></div>
     <router-view></router-view>
-    <div id="demark" class="mt-auto"></div>
+    <div class="mt-auto demark"></div>
     <Footer />
   </div>
 </template>
@@ -36,7 +36,7 @@ body {
   background-color: #D4D4D4;
 }
 
-#demark {
+.demark {
   width: 100%;
   height: 0.4rem;
   border: 0.2rem solid #D1515A;

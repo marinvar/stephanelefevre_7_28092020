@@ -5,21 +5,19 @@
     </template>
     <template v-slot:body>
       <form
-        id="editCommentForm"
+        class="editCommentForm"
         method="post"
       >
         <div class="input-group p-3">
           <input
             type="text"
             :value="comment"
-            id="editCommentInput"
-            class="form-control"
+            class="form-control editCommentInput"
             placeholder="Commentaire"
             @input="commentInput"
           />
           <button
-            id="editCommentButton"
-            class="btn btn-success"
+            class="btn btn-success editCommentButton"
             @click.prevent="submitCommentEdit"
           ><BIconTelegram /></button>
         </div>
