@@ -180,5 +180,16 @@
     }
   }
 
+@media (max-width: 767px) {
+  #discussionsPanel {
+    #discussionsTab {
+        pointer-events: unset;
+        opacity: 1;
+      }
+      .discussion {
+        cursor: pointer;
+      }
+  }
+}
 
 </style>

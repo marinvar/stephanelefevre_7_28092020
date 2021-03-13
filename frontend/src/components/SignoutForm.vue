@@ -87,9 +87,3 @@ export default {
 
 }
 </script>
-
-<style>
-  input, label {
-    display: block;
-  }
-</style>
