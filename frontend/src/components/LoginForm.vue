@@ -77,7 +77,6 @@ export default {
         localStorage.setItem('userToken', response.data.token);
         localStorage.setItem('pseudo', this.pseudo);
         localStorage.setItem('isAdmin', response.data.isAdmin);
-        console.log(response.data);
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.setLoggedIn(true);
         this.setIsAdmin(response.data.isAdmin);
@@ -86,9 +85,8 @@ export default {
         this.$router.push('/');
       }.bind(this))
       .catch(function (error) {
-        console.log(error.response);
-            this.badLogin = true;
-            this.errorMessage = error.response.data.error;
+        this.badLogin = true;
+        this.errorMessage = error.response.data.error;
       }.bind(this));
     },
     ...mapActions(['setLoggedIn','setIsAdmin'])
@@ -99,7 +97,7 @@ export default {
 
 <style>
   input, label {
-    display: block;
+    display: block!important;
   }
 
   .bad-login {

@@ -1,5 +1,5 @@
 <template>
-  <div class="vh-100 d-flex flex-column">
+  <div class="app vh-100 d-flex flex-column">
     <Navbar />
     <div class="demark"></div>
     <router-view></router-view>
@@ -33,6 +33,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #091F43;
+}
+
+.app {
   background-color: #D4D4D4;
 }
 

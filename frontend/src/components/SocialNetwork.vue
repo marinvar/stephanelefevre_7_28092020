@@ -5,10 +5,10 @@
       <router-link to="/login">vous connecter</router-link><br />
       pour accéder au réseau social d'entreprise<br /> de Groupomania !</p>
     </div>
-    <div v-else-if="this.userToken !== null && this.userId !== null" class="d-flex flex-fill">
+    <div v-else-if="this.userToken !== null && this.userId !== null" class="d-md-flex flex-fill">
       <DiscussionsPanel />
       <div id="discussionDisplay" class="mx-auto expanded flex-fill d-flex flex-column">
-        <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau {{ pseudo }} !</h1>
+        <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau social, {{ pseudo }} !</h1>
         <DiscussionDisplay />
       </div>
     </div>
@@ -35,12 +35,17 @@ export default {
 </script>
 
 <style lang='scss'>
-  DiscussionsPanel {
-    display: inline-block;
+  #discussionDisplay {
+    background-color: white!important;
   }
 
-  #discussionDisplay {
-    max-width: 67%;
+
+  @media (min-width: 768px) {
+    #discussionDisplay {
+      max-width: 60%;
+
+    }
+    
   }
 
 </style>

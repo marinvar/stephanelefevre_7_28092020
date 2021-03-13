@@ -1,6 +1,6 @@
 <template>
   <div id="discussionsPanel" class="expanded d-flex flex-column">
-    <div class="d-flex flex-row-reverse my-2">
+    <div class="d-flex flex-row-reverse">
       <div class="discussion-icon me-3 expanded" id="discussionsPanelToggle" data-bs-toggle="tooltip" data-bs-placement="top" title="Masquer les discussions" @click="toggleDiscussionPanel">
         <BIconArrowLeftCircle />
       </div>
@@ -14,7 +14,7 @@
         <input id="discussionsFilter" class="rounded-3 m-auto" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
       </div>
     </div>
-    <h2 class="mt-3">Discussions</h2>
+    <h2>Discussions</h2>
     <DiscussionsList />
     <div v-if="showModalCreate">
       <Modal @closeModalCreate="closeModalCreate()"> 
@@ -147,8 +147,8 @@ let timeout = null;
       cursor: pointer;
     }
     &.expanded {
-      width: 33%;
-      color: white
+      width: 40%;
+      color: white;
     }
     #discussionsPanelToggle {
       transform: rotate(180deg);
@@ -177,6 +177,14 @@ let timeout = null;
     }
   }
 
-
+@media (max-width: 767px) {
+  #discussionsPanel {
+    width: 100%!important;
+    color: white!important;
+  }
+  #discussionsPanelToggle {
+    display: none;
+  }
+}
 
 </style>
