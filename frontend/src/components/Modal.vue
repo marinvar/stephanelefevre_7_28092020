@@ -51,7 +51,8 @@
   color: #091F43;
   font-size: 1.2rem;
   font-weight: 600;
-  width: 22rem;
+  min-width: 20rem;
+  width: 60%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;

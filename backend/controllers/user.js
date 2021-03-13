@@ -15,10 +15,10 @@ exports.signup = (req, res, next) => {
       password: hash
     });
     user.save()
-    .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-    .catch(error => res.status(400).json({ error }));
+    .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
+    .catch(error => res.status(400).json({ error: "Ce pseudo existe déjà..." }));
   })
-  .catch(error => res.status(500).json({ error }));
+  .catch(error => res.status(500).json({ error: "Erreur lors de la création de l'utilisateur" }));
 }
 
 /**
@@ -28,14 +28,15 @@ exports.login = (req, res, next) => {
   User.findOne({ where: { pseudo: req.body.pseudo } })
   .then(user => {
     if (!user) {
-      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+      return res.status(401).json({ error: "Utilisateur non trouvé !" });
     }
     bcrypt.compare(req.body.password, user.password)
     .then(valid => {
       if (!valid) {
-        return res.status(401).json({ error: 'Mot de passe incorrect !' });
+        return res.status(401).json({ error: "Mot de passe incorrect !" });
       }
       res.status(200).json({
+        isAdmin: user.isAdmin,
         userId: user.id,
         token: jwt.sign(
           { userId: user.id },

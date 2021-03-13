@@ -27,11 +27,20 @@
         <template v-slot:message>
           <div class="text-start">
             {{ comment.comment }}
+            <div v-if="editComment === true" :value="comment.comment">
+              <CommentEdit v-bind:initialComment="comment" />
+            </div>
           </div>
         </template>
         <template v-slot:created>
           <div  class="comment-created text-end mx-3" v-bind:title="'Par ' + comment.author + ', le ' + comment.created_at">
             Par {{ comment.author }}, le {{ comment.created_at }}
+            <span v-if="pseudo === comment.author" role="button" class="mx-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Editer ce commentaire" @click="commentEdit($event)" >
+              <BIconPencilSquare />
+            </span>
+            <span v-if="isAdmin === true || pseudo === comment.author" role="button" class="mx-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
+              <BIconTrash />
+            </span>
           </div>
         </template>
       </DiscussionComment>
@@ -63,10 +72,12 @@ import DiscussionHeader from '@/components/DiscussionHeader';
 import DiscussionBody from '@/components/DiscussionBody';
 import DiscussionComment from '@/components/DiscussionComment';
 import CommentInput from '@/components/CommentInput';
+import CommentEdit from '@/components/CommentEdit';
 import VPagination from 'vue3-pagination';
 import "vue3-pagination/dist/vue3-pagination.css";
 import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
+import { BIconTrash, BIconPencilSquare } from 'bootstrap-icons-vue';
 
 export default {
   data() {
@@ -74,10 +85,11 @@ export default {
       comments: [],
       totalPages: 1,
       discussionId: this.currentDiscussion ? this.currentDiscussion.id : "",
+      pseudo: localStorage.getItem('pseudo'),
       page: 1,
       count: 0,
       pageSize: 6,
-      pageSizes: [4,6,8,10,12]
+      pageSizes: [4,6,8,10,12],
     }
   },
   components: {
@@ -85,10 +97,13 @@ export default {
     DiscussionBody,
     DiscussionComment,
     CommentInput,
-    VPagination
+    CommentEdit,
+    VPagination,
+    BIconTrash,
+    BIconPencilSquare
   },
   computed: {
-    ...mapState(['currentDiscussion','addedComment'])
+    ...mapState(['currentDiscussion','addedComment','isAdmin','editComment'])
   },
   created() {
     this.$watch('currentDiscussion', () => {
@@ -100,12 +115,17 @@ export default {
         this.updateAddedComment(false);
       }
     })
+    this.$watch('editComment', (newVal) => {
+      if (!newVal) {
+        this.updateEditComment(false);
+      }
+    })
   },
   methods: {
     getRequestParams(discussionId, page, pageSize) {
       let params = {};
       if (discussionId) {
-        params["discussionId"] = discussionId
+        params["discussionId"] = discussionId;
       }
       if (page) {
         params["page"] = page - 1;
@@ -145,7 +165,25 @@ export default {
       this.page = 1;
       this.retrieveComments();
     },
-    ...mapActions(['updateAddedComment','identify401'])
+    commentDelete (id) {
+      let params = {};
+      params ["id"] = id; 
+      axios.get('http://localhost:3000/api/comment/deleteComment', { params })
+      .then(() => {
+        this.updateAddedComment(true);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+            this.identify401(error);
+          } else {
+            console.log(error);
+          }
+      });
+    },
+    commentEdit () {
+      this.updateEditComment(true);
+    },
+    ...mapActions(['updateAddedComment','identify401','updateEditComment'])
     
   }
 }
@@ -205,6 +243,21 @@ p {
 
 #discussionTitle {
   color: #D1515A;
+}
+
+.comment-delete, .comment-edit {
+  color: white;
+  font-size: 1rem;
+  padding: 0.2rem;
+  border-radius: 0.3rem;
+}
+.comment-delete {
+  background-color: #D1515A;
+}
+
+.comment-edit {
+  background-color: #198754;
+
 }
 
 </style>

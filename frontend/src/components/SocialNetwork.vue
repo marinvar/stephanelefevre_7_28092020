@@ -8,7 +8,7 @@
     <div v-else-if="this.userToken !== null && this.userId !== null" class="d-flex flex-fill">
       <DiscussionsPanel />
       <div id="discussionDisplay" class="mx-auto expanded flex-fill d-flex flex-column">
-        <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau !</h1>
+        <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau {{ pseudo }} !</h1>
         <DiscussionDisplay />
       </div>
     </div>
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       userToken: localStorage.getItem('userToken'),
-      userId: parseInt(localStorage.getItem('userId'))
+      userId: parseInt(localStorage.getItem('userId')),
+      pseudo: localStorage.getItem('pseudo')
     }
   },
   components: {

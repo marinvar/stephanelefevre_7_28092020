@@ -30,7 +30,7 @@
 
     <p>
       <input
-        class="mx-auto"
+        class="mx-auto mt-3 btn btn-danger"
         type="submit"
         value="Se désinscrire"
       >
@@ -66,7 +66,12 @@ export default {
         password: this.password
       })
       .then(() => {
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('isAdmin');
         this.setLoggedIn(false);
+        this.setIsAdmin(false);
         this.$router.push('/signup');
       })
       .catch((error) => {
@@ -77,7 +82,7 @@ export default {
         }
       });
     },
-    ...mapActions(['setLoggedIn','identify401'])
+    ...mapActions(['setLoggedIn','identify401','setIsAdmin'])
   }
 
 }

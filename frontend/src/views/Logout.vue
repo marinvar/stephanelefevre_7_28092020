@@ -25,11 +25,14 @@ export default {
     },
     logout() {
       localStorage.removeItem('userId');
+      localStorage.removeItem('pseudo');
       localStorage.removeItem('userToken');
+      localStorage.removeItem('isAdmin');
       this.setLoggedIn(false);
+      this.setIsAdmin(false);
       this.$router.push('/');
     },
-    ...mapActions(['setLoggedIn'])
+    ...mapActions(['setLoggedIn','setIsAdmin'])
   }
 }
 </script>

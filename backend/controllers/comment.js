@@ -37,7 +37,8 @@ exports.getComments = (req, res, next) => {
 
   Comment.findAndCountAll({
     where: {
-      DiscussionId: discussionId
+      DiscussionId: discussionId,
+      delete_flag: false,
     },
     order: [
       ['created_at', 'DESC']
@@ -53,6 +54,48 @@ exports.getComments = (req, res, next) => {
     res.status(500).send({
        message:
         error.message || "Une erreur est survenue lors de la recherche des commentaires." 
+    });
+  });
+};
+
+exports.deleteComment = (req, res, next) => {
+  const { id } = req.query;
+  Comment.findOne({ where: { id: id } })
+  .then((comment) => {
+    comment.update({ delete_flag: true} );
+  })
+    .then(() => res.status(200).json({ message: 'Commentaire supprimé !' }))
+    .catch(error => {
+      res.status(500).send({
+        message:
+        error.message || "Une erreur est survenue lors de la suppression du commentaire." 
+      });
+    })
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la recherche des commentaires." 
+    });
+  });
+};
+
+exports.editComment = (req, res, next) => {
+  const { newComment, id } = req.body;
+  Comment.findOne({ where: { id: id } })
+  .then((comment) => {
+    comment.update({ comment: newComment} );
+  })
+    .then(() => res.status(200).json({ message: 'Commentaire édité !' }))
+    .catch(error => {
+      res.status(500).send({
+        message:
+        error.message || "Une erreur est survenue lors de l'édition du commentaire." 
+      });
+    })
+  .catch(error => {
+    res.status(500).send({
+       message:
+        error.message || "Une erreur est survenue lors de la recherche du commentaire." 
     });
   });
 };

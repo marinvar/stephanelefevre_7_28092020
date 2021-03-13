@@ -11,9 +11,14 @@ export default createStore({
     discussionsFilter: [],
     loggedIn: false,
     addedComment: false,
-    addedDiscussion: false
+    addedDiscussion: false,
+    isAdmin: JSON.parse(localStorage.getItem("isAdmin")),
+    editComment: false
   },
   mutations: {
+    UPDATE_EDIT_COMMENT(state, editComment) {
+      state.editComment = editComment;
+    },
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
       if (!loggedIn) {
@@ -22,12 +27,18 @@ export default createStore({
         localStorage.removeItem('userToken');
       }
     },
+    SET_IS_ADMIN(state, isAdmin) {
+      state.isAdmin = isAdmin;
+      localStorage.setItem('isAdmin', isAdmin);
+    },
     IDENTIFY_401(state, error) {
       if (error.response.data.error.name === "TokenExpiredError" || error.response.data.error.name === "Utilisateur non trouvé !") {
         localStorage.removeItem('pseudo');
         localStorage.removeItem('userId');
         localStorage.removeItem('userToken');
+        localStorage.removeItem('isAdmin');
         state.loggedIn = false;
+        state.isAdmin = false;
         router.push('/login');
       }
     },
@@ -52,6 +63,9 @@ export default createStore({
     setLoggedIn ({ commit }, value) {
       commit('SET_LOGGED_IN', value);
     },
+    setIsAdmin ({ commit }, value) {
+      commit('SET_IS_ADMIN', value);
+    },
     identify401 ({ commit }, value) {
       commit('IDENTIFY_401', value);
     },
@@ -69,6 +83,9 @@ export default createStore({
     },
     updateAddedDiscussion ({ commit }, value) {
       commit('UPDATE_ADDED_DISCUSSION', value);
+    },
+    updateEditComment ({ commit }, value) {
+      commit('UPDATE_EDIT_COMMENT', value);
     }
   },
   modules: {

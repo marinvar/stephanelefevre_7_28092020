@@ -38,7 +38,7 @@
       </p>
 
     </form>
-    <div class="bad-login" v-if="badLogin = true">
+    <div class="bad-login" v-if="badLogin === true">
       {{ errorMessage }}
     </div>
   </div>
@@ -76,8 +76,11 @@ export default {
         localStorage.setItem('userId', response.data.userId);
         localStorage.setItem('userToken', response.data.token);
         localStorage.setItem('pseudo', this.pseudo);
+        localStorage.setItem('isAdmin', response.data.isAdmin);
+        console.log(response.data);
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.setLoggedIn(true);
+        this.setIsAdmin(response.data.isAdmin);
         this.badLogin = false;
         this.errorMessage = null;
         this.$router.push('/');
@@ -88,7 +91,7 @@ export default {
             this.errorMessage = error.response.data.error;
       }.bind(this));
     },
-    ...mapActions(['setLoggedIn'])
+    ...mapActions(['setLoggedIn','setIsAdmin'])
   }
 
 }

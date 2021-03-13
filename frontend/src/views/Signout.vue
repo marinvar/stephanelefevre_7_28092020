@@ -23,7 +23,7 @@ export default {
   .danger {
     color: white;
     font-weight: 600;
-    background-color: red;
+    background-color: #dc3545;
     padding: 0.5rem;
     margin-bottom: 3rem;
     width: max-content;
