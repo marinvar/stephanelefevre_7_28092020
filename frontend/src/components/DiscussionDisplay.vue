@@ -236,7 +236,7 @@ p {
   .Control {
     fill: #888888;
     &.Control-active {
-      fill: 333333;
+      fill: #333333;
     }
   }    
 }
