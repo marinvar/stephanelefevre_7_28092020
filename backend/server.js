@@ -1,6 +1,8 @@
 require('dotenv').config();
 const http = require('http');
+/* const https = require('https'); */
 const app = require('./app');
+/* const fs = require('fs'); */
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -37,6 +39,12 @@ const errorHandler = error => {
   }
 };
 
+/* const httpsOptions = {
+  key: fs.readFileSync('./security/cert.key'),
+  cert: fs.readFileSync('./security/cert.pem')
+};
+
+const server = https.createServer(httpsOptions, app); */
 const server = http.createServer(app);
 
 server.on('error', errorHandler);

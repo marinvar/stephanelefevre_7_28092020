@@ -2,10 +2,10 @@
   <div>
     <h2 class="mt-3">Déconnexion</h2>
     <p>Voulez-vous vraiment vous déconnecter ?</p>
-    <button class="btn btn-secondary m-3" @click="cancelLogout">
+    <button type="button" class="btn btn-secondary m-3" @click="cancelLogout">
       Annuler
     </button>
-    <button class="btn btn-success m-3" @click="logout">
+    <button type="button" class="btn btn-success m-3" @click="logout">
       Valider
     </button>
   </div>
