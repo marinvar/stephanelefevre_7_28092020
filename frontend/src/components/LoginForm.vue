@@ -31,13 +31,13 @@
 
       <p>
         <button
-          class="mx-auto"
+          class="mx-auto btn btn-success"
           type="submit"
         >Se connecter</button>
       </p>
 
     </form>
-    <div class="bad-login" v-if="badLogin === true || expiredConnection === true">
+    <div class="bad-login" v-if="badLogin === true">
       {{ errorMessage }}
     </div>
     <div class="connection-expired" v-if="expiredConnection === true">
@@ -80,6 +80,12 @@ export default {
         localStorage.setItem('pseudo', this.pseudo);
         localStorage.setItem('isAdmin', response.data.isAdmin);
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        this.setCurrentDiscussion({
+          User: {pseudo: "Administrateur"},
+          subject: "Welcome",
+          message: "Vous êtes maintenant sur le réseau social de Groupomania. Sélectionnez une discussion dans le panneau dédié pour l'afficher dans cet espace.",
+          created_at: ": Au tout début..."
+        });
         this.setLoggedIn(true);
         this.setIsAdmin(response.data.isAdmin);
         this.setConnectionExpired(false);
@@ -92,7 +98,7 @@ export default {
         this.errorMessage = error.response.data.error;
       }.bind(this));
     },
-    ...mapActions(['setLoggedIn','setIsAdmin','setConnectionExpired'])
+    ...mapActions(['setLoggedIn','setIsAdmin','setConnectionExpired','setCurrentDiscussion'])
   }
 
 }
@@ -103,7 +109,7 @@ export default {
     display: block!important;
   }
 
-  .bad-login {
+  .bad-login, .connection-expired {
     color: #D1515A;
     font-weight: 600;
   }

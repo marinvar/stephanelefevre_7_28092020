@@ -7,7 +7,8 @@ export default createStore({
       User: {pseudo: "Administrateur"},
       subject: "Welcome",
       message: "Vous êtes maintenant sur le réseau social de Groupomania. Sélectionnez une discussion dans le panneau dédié pour l'afficher dans cet espace.",
-      created_at: ": Au tout début..."},
+      created_at: ": Au tout début..."
+    },
     discussionsFilter: [],
     loggedIn: false,
     addedComment: false,

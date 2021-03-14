@@ -63,7 +63,7 @@
 
       <p class="p-0">
         <button
-          class="mx-auto"
+          class="mx-auto btn btn-success"
           type="submit"
         >S'inscrire</button>
       </p>
@@ -92,7 +92,7 @@ export default {
       email: null,
       password: null,
       passwordConfirm: null,
-      userId: null/* localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null */
+      userId: null
     }
   },
   computed: {
