@@ -1,5 +1,5 @@
 <template>
-  <Modal>
+  <modal-cmp>
     <template v-slot:header>
       Editer un commentaire
     </template>
@@ -7,6 +7,7 @@
       <form
         class="editCommentForm"
         method="post"
+        @submit.prevent="submitCommentEdit"
       >
         <div class="input-group p-3">
           <input
@@ -17,20 +18,20 @@
             @input="commentInput"
           />
           <button
+            type="submit"
             class="btn btn-success editCommentButton"
-            @click.prevent="submitCommentEdit"
-          ><BIconTelegram /></button>
+          >Editer <b-icon-telegram /></button>
         </div>
       </form>
     </template>
     <template v-slot:footer>
       <div></div>
-    </template> 
-  </Modal>
+    </template>
+  </modal-cmp>
 </template>
 
 <script>
-import { /* mapState,  */mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 import { BIconTelegram } from 'bootstrap-icons-vue';
 import axios from 'axios';
 import Modal from '@/components/Modal';
@@ -43,8 +44,8 @@ export default {
     }
   },
   components: {
-    BIconTelegram,
-    Modal
+    "b-icon-telegram": BIconTelegram,
+    "modal-cmp": Modal
   },
   methods: {
     commentInput (e) {

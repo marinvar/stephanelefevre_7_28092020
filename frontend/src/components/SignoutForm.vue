@@ -13,7 +13,7 @@
         v-model="pseudo"
         name="pseudo"
         @input="pseudoInput"
-      >
+      />
     </p>
 
     <p>
@@ -25,15 +25,14 @@
         v-model="password"
         name="password"
         @input="passwordInput"
-      >
+      />
     </p>
 
     <p>
-      <input
+      <button
         class="mx-auto mt-3 btn btn-danger"
         type="submit"
-        value="Se désinscrire"
-      >
+      >Se désinscrire</button>
     </p>
 
   </form>

@@ -2,22 +2,22 @@
   <div id="discussionsPanel" class="expanded d-flex flex-column">
     <div class="d-flex flex-row-reverse">
       <div class="discussion-icon me-3 expanded" id="discussionsPanelToggle" data-bs-toggle="tooltip" data-bs-placement="top" title="Masquer les discussions" @click="toggleDiscussionPanel">
-        <BIconArrowLeftCircle />
+        <b-icon-arrow-left-circle />
       </div>
       <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Nouvelle discussion" @click="showModalCreate = true">
-        <BIconChatLeftText />
+        <b-icon-chat-left-text />
       </div>
       <div class="discussion-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechercher dans les discussions" @click="toggleDiscussionsFilter">
-        <BIconSearch />
+        <b-icon-search />
       </div >
       <div id="discussionsFilterWrapper" class="mx-3">
-        <input id="discussionsFilter" class="rounded-3 m-auto" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
+        <input type="text" id="discussionsFilter" class="rounded-3 m-auto" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
       </div>
     </div>
     <h2>Discussions</h2>
-    <DiscussionsList />
+    <discussions-list />
     <div v-if="showModalCreate">
-      <Modal @closeModalCreate="closeModalCreate()"> 
+      <modal-cmp @closeModalCreate="closeModalCreate()">
         <template v-slot:header>
           <label for="inputModalSubjectCreate">Nouvelle discussion</label>
           <input id="inputModalSubjectCreate" v-model="subject" type="text" placeholder="Sujet" class="mx-auto rounded-3"/>
@@ -28,14 +28,14 @@
           </textarea>
         </template>
         <template v-slot:footer>
-          <button class="btn btn-secondary mt-3" @click="showModalCreate = false">
+          <button type="button" class="btn btn-secondary mt-3" @click="showModalCreate = false">
             Annuler
           </button>
-          <button class="btn btn-success mt-3" @click="createDiscussion">
+          <button type="button" class="btn btn-success mt-3" @click="createDiscussion">
             Valider
           </button>
         </template>
-      </Modal>
+      </modal-cmp>
     </div>
   </div>
 </template>
@@ -125,11 +125,11 @@ let timeout = null;
       ...mapActions(['setCurrentDiscussion', 'updateDiscussionsFilter','updateAddedDiscussion','identify401'])
     },
     components: {
-      BIconChatLeftText,
-      BIconSearch,
-      BIconArrowLeftCircle,
-      Modal,
-      DiscussionsList
+      "b-icon-chat-left-text": BIconChatLeftText,
+      "b-icon-search": BIconSearch,
+      "b-icon-arrow-left-circle": BIconArrowLeftCircle,
+      "modal-cmp": Modal,
+      "discussions-list": DiscussionsList
     }
   }
 </script>

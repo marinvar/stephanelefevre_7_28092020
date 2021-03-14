@@ -1,5 +1,5 @@
 <template>
-  <LoginForm class="d-flex flex-fill flex-column" />
+  <login-form class="d-flex flex-fill flex-column" />
 </template>
 
 <script>
@@ -8,7 +8,7 @@ import LoginForm from '@/components/LoginForm.vue';
 export default {
   name: 'Login',
   components: {
-    LoginForm
+    "login-form": LoginForm
   }
 }
 </script>

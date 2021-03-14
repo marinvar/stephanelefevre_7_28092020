@@ -1,7 +1,7 @@
 <template>
 <div class="d-flex flex-column flex-fill">
   <div>
-    <DiscussionHeader>
+    <discussion-header>
       <template v-slot:subject>
         <div id="discussionTitle" class="discussion-subject fs-3" v-bind:title="currentDiscussion.subject">
           {{ currentDiscussion.subject }}
@@ -12,38 +12,38 @@
           Par {{ currentDiscussion.User.pseudo }}, le {{ currentDiscussion.created_at }}
         </div>
       </template>
-    </DiscussionHeader>
-    <DiscussionBody>
+    </discussion-header>
+    <discussion-body >
       <template v-slot:message>
         <p class="text-start">
           {{ currentDiscussion.message }}
         </p>
       </template>
-    </DiscussionBody>
+    </discussion-body >
     <div class="demark mt-5"></div>
     <h2 class="fs-5 mt-2">Commentaires</h2>
     <div v-for="comment in comments" v-bind:key="comment.id" >
-      <DiscussionComment>
+      <discussion-comment>
         <template v-slot:message>
           <div class="text-start">
             {{ comment.comment }}
             <div v-if="editComment === true" :value="comment.comment">
-              <CommentEdit v-bind:initialComment="comment" />
+              <comment-edit v-bind:initialComment="comment" />
             </div>
           </div>
         </template>
         <template v-slot:created>
           <div  class="comment-created text-end mx-3" v-bind:title="'Par ' + comment.author + ', le ' + comment.created_at">
             Par {{ comment.author }}, le {{ comment.created_at }}
-            <span v-if="pseudo === comment.author" role="button" class="mx-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Editer ce commentaire" @click="commentEdit($event)" >
-              <BIconPencilSquare />
-            </span>
-            <span v-if="isAdmin === true || pseudo === comment.author" role="button" class="mx-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
-              <BIconTrash />
-            </span>
+            <button type="button" v-if="pseudo === comment.author" class="mx-1 mb-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Editer ce commentaire" @click="commentEdit($event)" >
+              Editer <b-icon-pencil-square />
+            </button>
+            <button type="button" v-if="isAdmin === true || pseudo === comment.author" class="mx-1 mb-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
+              Effacer <b-icon-trash />
+            </button>
           </div>
         </template>
-      </DiscussionComment>
+      </discussion-comment>
     </div>
   </div>
   <div id="comments-controls" class="mt-auto">
@@ -62,7 +62,7 @@
       active-color="#D1515A"
       @update:modelValue="handlePageChange"
     />
-    <CommentInput />
+    <comment-input />
   </div>
 </div>
 </template>
@@ -93,14 +93,14 @@ export default {
     }
   },
   components: {
-    DiscussionHeader,
-    DiscussionBody,
-    DiscussionComment,
-    CommentInput,
-    CommentEdit,
-    VPagination,
-    BIconTrash,
-    BIconPencilSquare
+    "discussion-header": DiscussionHeader,
+    "discussion-body": DiscussionBody,
+    "discussion-comment": DiscussionComment,
+    "comment-input": CommentInput,
+    "comment-edit": CommentEdit,
+    "v-pagination": VPagination,
+    "b-icon-trash": BIconTrash,
+    "b-icon-pencil-square": BIconPencilSquare
   },
   computed: {
     ...mapState(['currentDiscussion','addedComment','isAdmin','editComment'])

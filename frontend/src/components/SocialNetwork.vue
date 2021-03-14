@@ -6,10 +6,10 @@
       pour accéder au réseau social d'entreprise<br /> de Groupomania !</p>
     </div>
     <div v-else-if="this.userToken !== null && this.userId !== null" class="d-md-flex flex-fill">
-      <DiscussionsPanel />
+      <discussion-panel />
       <div id="discussionDisplay" class="mx-auto expanded flex-fill d-flex flex-column">
         <h1 class="mx-auto my-2 fs-5">Bienvenue sur votre réseau social, {{ pseudo }} !</h1>
-        <DiscussionDisplay />
+        <discussion-display />
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@ import DiscussionsPanel from '@/components/DiscussionsPanel';
 import DiscussionDisplay from '@/components/DiscussionDisplay';
 
 export default {
+  name: "SocialNetwork",
   data() {
     return {
       userToken: localStorage.getItem('userToken'),
@@ -28,8 +29,8 @@ export default {
     }
   },
   components: {
-    DiscussionsPanel,
-    DiscussionDisplay
+    "discussion-panel": DiscussionsPanel,
+    "discussion-display": DiscussionDisplay
   }  
 }
 </script>
