@@ -63,6 +63,8 @@ header {
       color: white;
       text-decoration: none;
       margin: 1rem;
+      padding-left: 0.3rem;
+      padding-right: 0.3rem;
       border-top: 0.5rem solid #091F43;
       &:hover {
         color: #D4D4D4;
