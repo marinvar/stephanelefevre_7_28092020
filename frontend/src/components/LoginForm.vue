@@ -38,8 +38,11 @@
       </p>
 
     </form>
-    <div class="bad-login" v-if="badLogin === true">
+    <div class="bad-login" v-if="badLogin === true || expiredConnection === true">
       {{ errorMessage }}
+    </div>
+    <div class="connection-expired" v-if="expiredConnection === true">
+      <p>Votre connexion a expiré<br />Veuillez vous reconnecter.</p>
     </div>
   </div>
 </template>
@@ -58,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['loggedIn'])
+    ...mapState(['loggedIn','expiredConnection'])
   },
   methods: {
     pseudoInput (e) {
@@ -80,6 +83,7 @@ export default {
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.setLoggedIn(true);
         this.setIsAdmin(response.data.isAdmin);
+        this.setConnectionExpired(false);
         this.badLogin = false;
         this.errorMessage = null;
         this.$router.push('/');
@@ -89,7 +93,7 @@ export default {
         this.errorMessage = error.response.data.error;
       }.bind(this));
     },
-    ...mapActions(['setLoggedIn','setIsAdmin'])
+    ...mapActions(['setLoggedIn','setIsAdmin','setConnectionExpired'])
   }
 
 }

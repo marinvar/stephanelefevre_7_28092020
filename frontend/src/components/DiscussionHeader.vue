@@ -1,6 +1,6 @@
 <template>
   <div>
-    <hr>
+    <hr />
     <div class='discussions-subject'>
       <slot name="subject">
         Default subject

@@ -13,11 +13,15 @@ export default createStore({
     addedComment: false,
     addedDiscussion: false,
     isAdmin: JSON.parse(localStorage.getItem("isAdmin")),
-    editComment: false
+    editComment: false,
+    expiredConnection: false
   },
   mutations: {
     UPDATE_EDIT_COMMENT(state, editComment) {
       state.editComment = editComment;
+    },
+    UPDATE_EXPIRED_CONNECTION(state, expiredConnection) {
+      state.expiredConnection = expiredConnection;
     },
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
@@ -39,6 +43,7 @@ export default createStore({
         localStorage.removeItem('isAdmin');
         state.loggedIn = false;
         state.isAdmin = false;
+        state.expiredConnection = true;
         router.push('/login');
       }
     },
@@ -62,6 +67,9 @@ export default createStore({
   actions: {
     setLoggedIn ({ commit }, value) {
       commit('SET_LOGGED_IN', value);
+    },
+    setConnectionExpired ({ commit }, value) {
+      commit('UPDATE_EXPIRED_CONNECTION', value);
     },
     setIsAdmin ({ commit }, value) {
       commit('SET_IS_ADMIN', value);
