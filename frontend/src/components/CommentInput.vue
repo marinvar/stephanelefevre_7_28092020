@@ -1,7 +1,7 @@
 <template>
   <form
     id="createComment"
-    @submit="createComment"
+    @submit.prevent="submitComment"
     method="post"
     v-if="this.currentDiscussion.id"
   >
@@ -14,9 +14,9 @@
         @input="commentInput"
       />
       <button
+        type="submit"
         id="createCommentButton"
         class="btn btn-success"
-        @click.prevent="submitComment"
       >Envoyer</button>
     </div>
   </form>

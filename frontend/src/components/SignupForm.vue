@@ -6,12 +6,12 @@
       action="/signup"
       method="post"
     >
-      <p v-if="errors.length">
+      <div v-if="errors.length">
         <b>Veuillez corriger l'(les) erreur(s) suivante(s) :</b>
         <ul>
           <li v-bind:key="error" v-for="error in errors">{{ error }}</li>
         </ul>
-      </p>
+      </div>
 
       <p class="p-0">
         <label for="pseudo">Pseudo</label>
@@ -22,7 +22,7 @@
           v-model="pseudo"
           name="pseudo"
           @input="pseudoInput"
-        >
+        />
       </p>
 
       <p class="p-0">
@@ -34,7 +34,7 @@
           v-model="email"
           name="email"
           @input="emailInput"
-        >
+        />
       </p>
 
       <p class="p-0">
@@ -46,7 +46,7 @@
           v-model="password"
           name="password"
           @input="passwordInput"
-        >
+        />
       </p>
 
       <p class="p-0">
@@ -58,15 +58,14 @@
           v-model="passwordConfirm"
           name="passwordConfirm"
           @input="passwordConfirmInput"
-        >
+        />
       </p>
 
       <p class="p-0">
-        <input
+        <button
           class="mx-auto"
           type="submit"
-          value="S'inscrire"
-        >
+        >S'inscrire</button>
       </p>
 
     </form>
@@ -83,6 +82,7 @@ import axios from 'axios';
 
 
 export default {
+  name: 'SignupForm',
   data() {
     return {
       badLogin: false,

@@ -1,6 +1,6 @@
 <template>
   <div class="home flex-fill d-flex">
-    <SocialNetwork />
+    <social-network />
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import SocialNetwork from '@/components/SocialNetwork.vue';
 export default {
   name: 'Home',
   components: {
-    SocialNetwork
+    "social-network": SocialNetwork
   }
 }
 </script>

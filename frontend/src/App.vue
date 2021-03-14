@@ -1,10 +1,10 @@
 <template>
   <div class="app vh-100 d-flex flex-column">
-    <Navbar />
+    <navbar-cmp />
     <div class="demark"></div>
     <router-view></router-view>
     <div class="mt-auto demark"></div>
-    <Footer />
+    <footer-cmp />
   </div>
 </template>
 
@@ -14,8 +14,8 @@
 
   export default {
     components: {
-      Navbar,
-      Footer
+      "navbar-cmp": Navbar,
+      "footer-cmp": Footer
     }  
   }
 </script>

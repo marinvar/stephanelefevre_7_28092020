@@ -14,7 +14,7 @@
           v-model="pseudo"
           name="pseudo"
           @input="pseudoInput"
-        >
+        />
       </p>
 
       <p>
@@ -26,15 +26,14 @@
           v-model="password"
           name="password"
           @input="passwordInput"
-        >
+        />
       </p>
 
       <p>
-        <input
+        <button
           class="mx-auto"
           type="submit"
-          value="Se connecter"
-        >
+        >Se connecter</button>
       </p>
 
     </form>

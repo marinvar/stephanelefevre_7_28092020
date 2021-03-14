@@ -1,16 +1,16 @@
 <template>
   <div class="d-flex flex-fill flex-column">
-    <signupform />
+    <signup-form />
   </div>
 </template>
 
 <script>
-import signupform from '@/components/signupform'
+import SignupForm from '@/components/SignupForm'
 
 export default {
-  name: 'signup',
+  name: 'Signup',
   components: {
-    signupform
+    "signup-form": SignupForm
   }
 
 }

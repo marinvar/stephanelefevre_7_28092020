@@ -3,7 +3,7 @@
     <h2 class="mt-3">Désinscription</h2>
     <p>Voulez-vous vraiment vous désinscrire ?</p>
     <p class="danger">(Attention, cette action est irréversible !)</p>
-    <SignoutForm class="d-flex flex-fill flex-column" />
+    <signout-form class="d-flex flex-fill flex-column" />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import SignoutForm from '@/components/SignoutForm.vue';
 export default {
   name: 'Signout',
   components: {
-    SignoutForm
+    "signout-form": SignoutForm
   }
 }
 </script>

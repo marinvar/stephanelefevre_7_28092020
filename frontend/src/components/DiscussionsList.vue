@@ -1,7 +1,7 @@
 <template>
   <div id="discussionsTab" class="d-flex flex-column flex-fill">
     <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussion my-1 mx-3" @click="selectDiscussion(discussion)">
-      <DiscussionHeader>
+      <discussion-header>
         <template v-slot:subject>
           <div class="discussion-subject" v-bind:title="discussion.subject">
             {{ discussion.subject }}
@@ -12,7 +12,7 @@
             Par {{ discussion.User.pseudo }}, le {{ discussion.created_at }}
           </div>
         </template>
-      </DiscussionHeader>
+      </discussion-header>
     </div>
     <div id="discussions-controls" class="mt-auto">
       <div class="mt-3">
@@ -139,8 +139,8 @@
       this.retrieveDiscussions();
     },
     components: {
-      DiscussionHeader,
-      VPagination
+      "discussion-header": DiscussionHeader,
+      "v-pagination": VPagination
     }
   }
 </script>
