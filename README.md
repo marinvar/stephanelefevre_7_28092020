@@ -30,6 +30,11 @@ PERSIST_TIME is the time of the token validity for authentication, expressed in 
 - run `npm run serve`  
 > app is served on localhost:8080  
 
+3. For testing purposes, 3 accounts are generated automatically in the app / database 
+- Pseudo: rhMaster, Password: rhMAST3R
+- Pseudo: darkBird, Password: darkB1RD
+- Pseudo: countingCrow, Password: countingCR0W
+
 3. A complete check of html5 and WCAG rules can be done easily, as HTML-validate is installed as a dependency (https://html-validate.org/)
 - to make checkup, on command line in frontend directory, use vue/cli by typing :  
 `npm run html-validate`
