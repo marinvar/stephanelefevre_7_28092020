@@ -2,7 +2,7 @@
 
 ## frontend and backend for social network  
 
-You have to get a MySQL database up and running, with credentials available (like wamp or mamp).
+You have to get a MySQL database up and running, with credentials available (if you don't have you can install easily with wamp or mamp).
 
 Once this repository cloned:  
 
