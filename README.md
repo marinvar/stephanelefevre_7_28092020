@@ -2,11 +2,13 @@
 
 ## frontend and backend for social network  
 
+You have to get a MySQL database up and running, with credentials available (like wamp or mamp).
+
 Once this repository cloned:  
 
 1. For backend  
 - go to backend directory in your console
-- add .env file received separately in main directory  
+- add .env file received separately in main directory if concerned  
 Or you can use the .env_backup file as model  
 - Change information in .env file to match your installation  
 DB_NAME is your MySQL database name  
