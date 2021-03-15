@@ -28,11 +28,17 @@ export default {
       localStorage.removeItem('pseudo');
       localStorage.removeItem('userToken');
       localStorage.removeItem('isAdmin');
+      this.setCurrentDiscussion({
+          User: {pseudo: "Administrateur"},
+          subject: "Welcome",
+          message: "Vous êtes maintenant sur le réseau social de Groupomania. Sélectionnez une discussion dans le panneau dédié pour l'afficher dans cet espace.",
+          created_at: ": Au tout début..."
+        });
       this.setLoggedIn(false);
       this.setIsAdmin(false);
       this.$router.push('/');
     },
-    ...mapActions(['setLoggedIn','setIsAdmin'])
+    ...mapActions(['setLoggedIn','setIsAdmin','setCurrentDiscussion'])
   }
 }
 </script>

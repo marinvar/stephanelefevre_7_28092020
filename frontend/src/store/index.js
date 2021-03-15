@@ -42,6 +42,12 @@ export default createStore({
         localStorage.removeItem('userId');
         localStorage.removeItem('userToken');
         localStorage.removeItem('isAdmin');
+        state.currentDiscussion = {
+          User: {pseudo: "Administrateur"},
+          subject: "Welcome",
+          message: "Vous êtes maintenant sur le réseau social de Groupomania. Sélectionnez une discussion dans le panneau dédié pour l'afficher dans cet espace.",
+          created_at: ": Au tout début..."
+        };
         state.loggedIn = false;
         state.isAdmin = false;
         state.expiredConnection = true;

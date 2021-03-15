@@ -71,6 +71,12 @@ export default {
         localStorage.removeItem('isAdmin');
         this.setLoggedIn(false);
         this.setIsAdmin(false);
+        this.setCurrentDiscussion({
+          User: {pseudo: "Administrateur"},
+          subject: "Welcome",
+          message: "Vous êtes maintenant sur le réseau social de Groupomania. Sélectionnez une discussion dans le panneau dédié pour l'afficher dans cet espace.",
+          created_at: ": Au tout début..."
+        });
         this.$router.push('/signup');
       })
       .catch((error) => {
@@ -81,7 +87,7 @@ export default {
         }
       });
     },
-    ...mapActions(['setLoggedIn','identify401','setIsAdmin'])
+    ...mapActions(['setLoggedIn','identify401','setIsAdmin','setCurrentDiscussion'])
   }
 
 }
