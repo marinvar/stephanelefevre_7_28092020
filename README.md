@@ -31,7 +31,7 @@ PERSIST_TIME is the time of the token validity for authentication, expressed in 
 > app is served on localhost:8080  
 
 3. For testing purposes, 3 accounts are generated automatically in the app / database 
-- Pseudo: rhMaster, Password: rhMAST3R
+- Pseudo: rhMaster, Password: rhMAST3R, account with admin / moderator rights to delete unwanted comments
 - Pseudo: darkBird, Password: darkB1RD
 - Pseudo: countingCrow, Password: countingCR0W
 
