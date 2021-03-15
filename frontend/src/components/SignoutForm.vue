@@ -1,41 +1,46 @@
 <template>
-  <form 
-    id="loginForm"
-    @submit.prevent="signoutSubmit"
-    method="post"
-  >
-    <p>
-      <label for="pseudo">Pseudo</label>
-      <input
-        class="mx-auto"
-        type="text"
-        id="pseudo"
-        v-model="pseudo"
-        name="pseudo"
-        @input="pseudoInput"
-      />
-    </p>
+  <div>
+    <form 
+      id="loginForm"
+      @submit.prevent="signoutSubmit"
+      method="post"
+    >
+      <p>
+        <label for="pseudo">Pseudo</label>
+        <input
+          class="mx-auto"
+          type="text"
+          id="pseudo"
+          v-model="pseudo"
+          name="pseudo"
+          @input="pseudoInput"
+        />
+      </p>
 
-    <p>
-      <label for="password">Mot de passe</label>
-      <input
-        class="mx-auto"
-        type="password"
-        id="password"
-        v-model="password"
-        name="password"
-        @input="passwordInput"
-      />
-    </p>
+      <p>
+        <label for="password">Mot de passe</label>
+        <input
+          class="mx-auto"
+          type="password"
+          id="password"
+          v-model="password"
+          name="password"
+          @input="passwordInput"
+        />
+      </p>
 
-    <p>
-      <button
-        class="mx-auto mt-3 btn btn-danger"
-        type="submit"
-      >Se désinscrire</button>
-    </p>
+      <p>
+        <button
+          class="mx-auto mt-3 btn btn-danger"
+          type="submit"
+        >Se désinscrire</button>
+      </p>
 
-  </form>
+    </form>
+    <div class="bad-login" v-if="badUser === true">
+      {{ errorMessage }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,7 +51,9 @@ export default {
   data() {
     return {
       pseudo: null,
-      password: null
+      password: null,
+      errorMessage: null,
+      badUser: false
     }
   },
   computed: {
@@ -81,10 +88,11 @@ export default {
         this.$router.push('/signup');
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response.status === 401 && error.response.data.error.name === "TokenExpiredError") {
           this.identify401(error);
         } else {
-          console.log(error);
+          this.badUser = true;
+          this.errorMessage = error.response.data.error;
         }
       });
     },
