@@ -158,14 +158,12 @@ export default {
             this.$router.push('/');
           }.bind(this))
           .catch(function (error) {
-            console.log(error.response);
             this.badLogin = true;
             this.errorMessage = error.response.json;
           });
         }
       }.bind(this))
       .catch(function (error) {
-        console.log(error.response);
         this.badLogin = true;
         this.errorMessage = error.response.data.error;
       }.bind(this));
