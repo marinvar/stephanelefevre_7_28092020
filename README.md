@@ -5,7 +5,7 @@
 Once this repository cloned:  
 
 1. For backend  
-- go to backend directory  
+- go to backend directory in your console
 - add .env file received separately in main directory  
 Or you can use the .env_backup file as model  
 - Change information in .env file to match your installation  
@@ -20,15 +20,15 @@ PSEUDO_PASS is a strong passphrase different than above ones to encode bidirecti
 PERSIST_TIME is the time of the token validity for authentication, expressed in seconds or a string describing a time span (i.e. 60 or '24h'or '7d' or '7 days')  
 - run `npm install`
 - run `npm start`  
-> app is served on localhost:8080  
+> server is watching on localhost:3000 if available
 
 2. For frontend,  
-- go to frontend directory  
+- go to frontend directory in your console
 - run `npm install`
 - run `npm run serve`  
-> server is watching on port number 3000 if available  
+> app is served on localhost:8080  
 
-3. A complete check of html5 and WCAG rules can be done easily, as HTML-validate is installed as a dependency  
+3. A complete check of html5 and WCAG rules can be done easily, as HTML-validate is installed as a dependency (https://html-validate.org/)
 - to make checkup, on command line in frontend directory, use vue/cli by typing :  
 `npm run html validate`
 
