@@ -27,8 +27,25 @@ exports.createDiscussion = (req, res, next) => {
     UserId: req.body.userId
   });
   discussion.save()
-  .then((Discussion) => {
-    res.status(201).json({ discussion: Discussion.dataValues, message: 'Discussion créée !' })})
+  .then((discussion) => {
+    Discussion.findOne({ 
+      where: {id: discussion.id},
+      include: { model: User,
+        attributes: ['pseudo'],
+      }
+    })
+    .then((discussionWithUser) => {
+      const concat = Buffer.from(discussionWithUser.dataValues.User.dataValues.pseudo, 'hex').toString();
+      discussionWithUser.dataValues.User.pseudo = concat.substring(0, concat.lastIndexOf('_'));
+      res.status(201).json({ discussion: discussionWithUser.dataValues, message: 'Discussion créée !' })
+    })
+    .catch(error => {
+      res.status(500).send({
+        message:
+        error.message || "Une erreur est survenue lors de la sauvegarde de la discussion." 
+      });
+    });
+  })
   .catch(error => {
     res.status(500).send({
        message:

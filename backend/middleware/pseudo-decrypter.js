@@ -1,7 +1,7 @@
 /**
  * middleware decrypting pseudo for database storage
  */
-const secret = process.env.PSEUDO_PASS;
+/* const secret = process.env.PSEUDO_PASS; */
 const mung = require('express-mung');
 
 function pseudoDecrypter (body, req, res){

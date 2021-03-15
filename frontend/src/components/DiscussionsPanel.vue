@@ -79,9 +79,7 @@ let timeout = null;
         }
         axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
         .then(function (response) {
-          const discussion = response.data.discussion;
-          discussion.User.pseudo = localStorage.getItem('pseudo');
-          this.setCurrentDiscussion(discussion);
+          this.setCurrentDiscussion(response.data.discussion);
           this.updateAddedDiscussion(true);
           this.subject = "";
           this.message = "";
