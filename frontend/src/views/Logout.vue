@@ -28,6 +28,7 @@ export default {
       localStorage.removeItem('pseudo');
       localStorage.removeItem('userToken');
       localStorage.removeItem('isAdmin');
+      this.updateDiscussionsFilter("");
       this.setCurrentDiscussion({
           User: {pseudo: "Administrateur"},
           subject: "Welcome",
@@ -38,7 +39,7 @@ export default {
       this.setIsAdmin(false);
       this.$router.push('/');
     },
-    ...mapActions(['setLoggedIn','setIsAdmin','setCurrentDiscussion'])
+    ...mapActions(['setLoggedIn','setIsAdmin','setCurrentDiscussion','updateDiscussionsFilter'])
   }
 }
 </script>

@@ -79,6 +79,7 @@ export default {
         localStorage.setItem('userToken', response.data.token);
         localStorage.setItem('pseudo', this.pseudo);
         localStorage.setItem('isAdmin', response.data.isAdmin);
+        this.updateDiscussionsFilter("");
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         this.setCurrentDiscussion({
           User: {pseudo: "Administrateur"},
@@ -98,7 +99,7 @@ export default {
         this.errorMessage = error.response.data.error;
       }.bind(this));
     },
-    ...mapActions(['setLoggedIn','setIsAdmin','setConnectionExpired','setCurrentDiscussion'])
+    ...mapActions(['setLoggedIn','setIsAdmin','setConnectionExpired','setCurrentDiscussion','updateDiscussionsFilter'])
   }
 
 }

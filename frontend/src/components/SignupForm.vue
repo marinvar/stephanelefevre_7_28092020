@@ -153,6 +153,7 @@ export default {
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             this.setLoggedIn(true);
             this.setIsAdmin(response.data.isAdmin);
+            this.updateDiscussionsFilter("");
             this.badLogin = false;
             this.errorMessage = null;
             this.$router.push('/');
@@ -168,7 +169,7 @@ export default {
         this.errorMessage = error.response.data.error;
       }.bind(this));
     },
-    ...mapActions(['setLoggedIn','setIsAdmin'])
+    ...mapActions(['setLoggedIn','setIsAdmin','updateDiscussionsFilter'])
   }
 }
 </script>

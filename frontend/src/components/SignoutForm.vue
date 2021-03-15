@@ -71,6 +71,7 @@ export default {
         localStorage.removeItem('isAdmin');
         this.setLoggedIn(false);
         this.setIsAdmin(false);
+        this.updateDiscussionsFilter("");
         this.setCurrentDiscussion({
           User: {pseudo: "Administrateur"},
           subject: "Welcome",
@@ -87,7 +88,7 @@ export default {
         }
       });
     },
-    ...mapActions(['setLoggedIn','identify401','setIsAdmin','setCurrentDiscussion'])
+    ...mapActions(['setLoggedIn','identify401','setIsAdmin','setCurrentDiscussion','updateDiscussionsFilter'])
   }
 
 }
