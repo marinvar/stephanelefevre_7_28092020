@@ -59,7 +59,7 @@ export default {
       }
       axios.post('http://localhost:3000/api/comment/editComment', bodyParameters)
       .then(function () {
-        this.comment = "";
+        this.comment = null;
         this.updateAddedComment(true);
         this.updateEditComment(false);
       }.bind(this))

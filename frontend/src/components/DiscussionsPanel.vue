@@ -23,16 +23,37 @@
         </template>
         <template v-slot:body>
           <label for="textareaModalMessageCreate" aria-label="message de la nouvelle discussion">Message</label>
-          <textarea id="textareaModalMessageCreate" v-model="message" placeholder="Message" class="mx-auto rounded-3">
+          <textarea
+            id="textareaModalMessageCreate"
+            v-model="message"
+            placeholder="Message"
+            class="mx-auto rounded-3"
+            @drop.prevent="dropHandler($event)"
+            @dragover.prevent="dragOverHandler($event)"
+          >
           </textarea>
+          <p class="drop-text">Vous pouvez également déposer une image (y compris les images animées) dans la zone de texte, ou utiliser le bouton suivant :</p>
+          <p class="file-error" v-if="imgError !== null">{{ imgError }}</p>
+          <input
+            id="inputImg"
+            type="file"
+            class="mx-auto mb-3 btn btn-secondary"
+            title="Ajouter un gif"
+            accept="image/*"
+            @change.prevent="imageInput($event)"
+          />
+          <img id="imgPlayer" src="@/assets/icon.svg" alt="une image" />
         </template>
         <template v-slot:footer>
-          <button type="button" class="btn btn-secondary mt-3" aria-label="Annuler la création de discussion" @click="showModalCreate = false">
+          <button type="button" class="btn btn-secondary mt-3" aria-label="Annuler la création de discussion" @click="cancelDiscussion">
             Annuler
           </button>
           <button type="button" class="btn btn-success mt-3" aria-label="Valider la création de discussion" @click="createDiscussion">
             Valider
           </button>
+          <div id="discussionCreateError" class="my-2" v-if="errorMessage !== null">
+            <p>{{ errorMessage }}</p>
+          </div>
         </template>
       </modal-cmp>
     </div>
@@ -40,13 +61,13 @@
 </template>
 
 <script>
-import { BIconChatLeftText, BIconSearch, BIconArrowLeftCircle } from 'bootstrap-icons-vue';
-import Modal from '@/components/Modal.vue';
-import DiscussionsList from '@/components/DiscussionsList.vue';
-import { mapState, mapActions } from 'vuex';
-import axios from 'axios';
+  import { BIconChatLeftText, BIconSearch, BIconArrowLeftCircle } from 'bootstrap-icons-vue';
+  import Modal from '@/components/Modal.vue';
+  import DiscussionsList from '@/components/DiscussionsList.vue';
+  import { mapState, mapActions } from 'vuex';
+  import axios from 'axios';
 
-let timeout = null;
+  let timeout = null;
 
   export default {
     data() {
@@ -54,7 +75,10 @@ let timeout = null;
         showModalCreate: false,
         subject: null,
         message: null,
-        userId: parseInt(localStorage.getItem('userId'))
+        userId: parseInt(localStorage.getItem('userId')),
+        uploadedImg: null,
+        imgError: null,
+        errorMessage: null
       }
     },
     computed: {
@@ -63,9 +87,20 @@ let timeout = null;
     methods: {
       closeModalCreate() {
         this.showModalCreate = false;
+        const img = document.getElementById("imgPlayer");
+        img.classList.add('displayed');
+        this.uploadedImg = null;
+        this.imgError = null;
       },
       createDiscussion () {
-        this.showModalCreate = false;
+        if (this.subject === null || this.message === null) {
+          this.errorMessage = "Le sujet ou le message sont manquants."
+          return false;
+        } else if (this.imgError !== null) {
+          this.errorMessage = "Il y a une erreur concernant le fichier joint."
+          return false;
+        }
+        this.errorMessage = null;
         const input = document.getElementById('discussionsFilter');
         if (input.classList.contains('expanded')) {
           this.updateDiscussionsFilter('');
@@ -76,12 +111,13 @@ let timeout = null;
           message: this.message,
           userId: parseInt(localStorage.getItem('userId'))
         }
+        this.showModalCreate = false;
         axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
         .then(function (response) {
           this.setCurrentDiscussion(response.data.discussion);
           this.updateAddedDiscussion(true);
-          this.subject = "";
-          this.message = "";
+          this.subject = null;
+          this.message = null;
         }.bind(this))
         .catch((error) => {
           if (error.response.status === 401) {
@@ -90,6 +126,13 @@ let timeout = null;
             console.log(error);
           }
         });
+      },
+      cancelDiscussion() {
+        this.showModalCreate = false;
+        this.uploadedImg = null;
+        const img = document.getElementById("imgPlayer");
+        img.classList.remove('displayed');
+        this.errorMessage = null;
       },
       toggleDiscussionPanel () {
         const panelClasses = document.getElementById('discussionsPanel').classList;
@@ -119,6 +162,61 @@ let timeout = null;
         timeout = setTimeout(() => {
           this.updateDiscussionsFilter(event.target.value);
         }, 1000);
+        
+      },
+      dropHandler(event) {
+        event.stopPropagation();
+        const dt = event.dataTransfer;
+        const file = dt.files[0];
+        if (!file) {
+          this.imgError = null;
+          return false;
+        } else if (file.size && file.size > 500000) {
+          this.imgError = "Désolé, ce fichier est trop gros. La taille limite est de 500Ko.";
+          return false;
+        } else if ((file.type && file.type.indexOf('image') === -1) || !file.type) {
+          this.imgError = "Ce fichier n'est pas une image : " + file.type + " !";
+          return false;
+        } else {
+          this.uploadedImg = file;
+          this.imgError = null;
+          const reader = new FileReader();
+          const img = document.getElementById("imgPlayer");
+          img.classList.add('displayed');
+          reader.addEventListener('load', (event) => {
+            img.src = event.target.result;
+          });
+          reader.readAsDataURL(this.uploadedImg);
+        }
+        /* console.log(files[0] + ": " + files[0].name + ", " + (files[0].size / 1000) + " Ko"); */
+      },
+      dragOverHandler(event) {
+        event.stopPropagation();
+      },
+      imageInput(event) {
+        event.stopPropagation();
+        const file = event.target.files[0];
+        if (!file) {
+          this.imgError = null;
+          return false;
+        } else if (file.size && file.size > 500000) {
+          this.imgError = "Désolé, ce fichier est trop gros. La taille limite est de 500Ko."
+          return false;
+        } else if ((file.type && file.type.indexOf('image') === -1) || !file.type) {
+          this.imgError = "Ce fichier n'est pas une image : " + file.type + " !"
+          return false;
+        } else {
+          console.log(file.type);
+          this.uploadedImg = file;
+          this.imgError = null;
+          const reader = new FileReader();
+          const img = document.getElementById("imgPlayer");
+          img.classList.add('displayed');
+          reader.addEventListener('load', (event) => {
+            img.src = event.target.result;
+          });
+          reader.readAsDataURL(this.uploadedImg);
+        }
         
       },
       ...mapActions(['setCurrentDiscussion', 'updateDiscussionsFilter','updateAddedDiscussion','identify401'])
@@ -174,6 +272,32 @@ let timeout = null;
         }
       }
     }
+  }
+  .drop-text {
+    font-size: 0.8rem;
+    font-weight: 400;
+
+  }
+
+  #dropZone {
+    width: 20rem;
+    height: 3rem;
+    border: 0.2rem solid #D1515A;
+    border-radius: 0.5rem;
+  }
+  #imgPlayer {
+    max-width: 5rem;
+    display: none;
+    &.displayed {
+      display: unset;
+    }
+  }
+  #discussionCreateError, .file-error {
+    color: red;
+    font-size: 1.2rem;
+  }
+
+  .file-error {
   }
 
 @media (max-width: 767px) {
