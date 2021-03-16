@@ -14,24 +14,23 @@
         <input type="text" id="discussionsFilter" class="rounded-3 m-auto" title="Mots à rechercher séparés par un espace" placeholder="Rechercher..." @input="setDiscussionsFilter" />
       </div>
     </div>
-    <h2>Discussions</h2>
     <discussions-list />
     <div v-if="showModalCreate">
-      <modal-cmp @closeModalCreate="closeModalCreate()">
+      <modal-cmp @closeModalCreate="closeModalCreate()" aria-label="Créer une nouvelle discussion">
         <template v-slot:header>
-          <label for="inputModalSubjectCreate">Nouvelle discussion</label>
+          <label for="inputModalSubjectCreate" aria-label="sujet de la discussion">Nouvelle discussion</label>
           <input id="inputModalSubjectCreate" v-model="subject" type="text" placeholder="Sujet" class="mx-auto rounded-3"/>
         </template>
         <template v-slot:body>
-          <label for="textareaModalMessageCreate">Message</label>
+          <label for="textareaModalMessageCreate" aria-label="message de la nouvelle discussion">Message</label>
           <textarea id="textareaModalMessageCreate" v-model="message" placeholder="Message" class="mx-auto rounded-3">
           </textarea>
         </template>
         <template v-slot:footer>
-          <button type="button" class="btn btn-secondary mt-3" @click="showModalCreate = false">
+          <button type="button" class="btn btn-secondary mt-3" aria-label="Annuler la création de discussion" @click="showModalCreate = false">
             Annuler
           </button>
-          <button type="button" class="btn btn-success mt-3" @click="createDiscussion">
+          <button type="button" class="btn btn-success mt-3" aria-label="Valider la création de discussion" @click="createDiscussion">
             Valider
           </button>
         </template>
@@ -139,7 +138,7 @@ let timeout = null;
   #discussionsPanel {
     width: 3.5rem;
     background-color: #091F43;
-    color: #091F43;
+    color: white;
     overflow: hidden;
     transition: 0.6s ease-in-out;
     .discussion-icon {
@@ -148,7 +147,7 @@ let timeout = null;
     }
     &.expanded {
       width: 40%;
-      color: white;
+      
     }
     #discussionsPanelToggle {
       transform: rotate(180deg);

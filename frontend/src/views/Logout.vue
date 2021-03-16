@@ -6,7 +6,7 @@
       Annuler
     </button>
     <button type="button" class="btn btn-success m-3" @click="logout">
-      Valider
+      Se connecter
     </button>
   </div>
 </template>

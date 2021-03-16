@@ -2,7 +2,7 @@
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
-        <div class="modal-container">
+        <div class="modal-container" role="dialog" aria-modal="true">
           <div class="modal-header">
             <slot name="header">
               Default header
@@ -16,7 +16,7 @@
           <div class="modal-footer">
             <slot name="footer">
               Default footer
-              <button type="button" class="btn btn-success mt-3" @click="$emit('closeModal')">
+              <button type="button" class="btn btn-success mt-3" aria-label="Fermer cette fenêtre" @click="$emit('closeModal')">
                 Fermer
               </button>
             </slot>

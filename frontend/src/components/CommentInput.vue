@@ -17,6 +17,7 @@
         type="submit"
         id="createCommentButton"
         class="btn btn-success"
+        aria-label="Envoyer le commentaire à créer"
       >Envoyer</button>
     </div>
   </form>

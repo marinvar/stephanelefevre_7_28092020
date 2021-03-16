@@ -35,10 +35,10 @@
         <template v-slot:created>
           <div  class="comment-created text-end mx-3" v-bind:title="'Par ' + comment.author + ', le ' + comment.created_at">
             Par {{ comment.author }}, le {{ comment.created_at }}
-            <button type="button" v-if="pseudo === comment.author" class="mx-1 mb-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Editer ce commentaire" @click="commentEdit($event)" >
+            <button type="button" v-if="pseudo === comment.author" class="mx-1 mb-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Editer ce commentaire" title="Editer ce commentaire" @click="commentEdit($event)" >
               Editer <b-icon-pencil-square />
             </button>
-            <button type="button" v-if="isAdmin === true || pseudo === comment.author" class="mx-1 mb-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
+            <button type="button" v-if="isAdmin === true || pseudo === comment.author" class="mx-1 mb-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Supprimer ce commentaire" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
               Effacer <b-icon-trash />
             </button>
           </div>
@@ -49,7 +49,7 @@
   <div id="comments-controls" class="mt-auto">
     <div class="mt-3">
       Commentaires par Page:
-      <select v-model="pageSize" @change="handlePageSizeChange($event)">
+      <select v-model="pageSize" @change="handlePageSizeChange($event)" title="Nombre de commentaires par page">
         <option v-for="size in pageSizes" :key="size" :value="size">
           {{ size }}
         </option>

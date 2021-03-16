@@ -1,5 +1,6 @@
 <template>
   <div id="discussionsTab" class="d-flex flex-column flex-fill">
+    <h2>Discussions</h2>
     <div v-for="discussion in discussions" v-bind:key="discussion.id" class="discussion my-1 mx-3" @click="selectDiscussion(discussion)">
       <discussion-header>
         <template v-slot:subject>
@@ -17,7 +18,7 @@
     <div id="discussions-controls" class="mt-auto">
       <div class="mt-3">
         Discussions par Page:
-        <select v-model="pageSize" @change="handlePageSizeChange($event)">
+        <select v-model="pageSize" @change="handlePageSizeChange($event)" title="Nombre de discussions par page">
           <option v-for="size in pageSizes" :key="size" :value="size">
             {{ size }}
           </option>

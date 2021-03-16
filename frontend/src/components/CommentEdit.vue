@@ -1,6 +1,6 @@
 <template>
   <modal-cmp>
-    <template v-slot:header>
+    <template v-slot:header aria-label="Editer un commentaire">
       Editer un commentaire
     </template>
     <template v-slot:body>
@@ -20,6 +20,7 @@
           <button
             type="submit"
             class="btn btn-success editCommentButton"
+            aria-label="Envoyer le commentaire édité"
           >Editer <b-icon-telegram /></button>
         </div>
       </form>
