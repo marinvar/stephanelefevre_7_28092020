@@ -146,10 +146,10 @@
             this.uploadedImg = null;
           }.bind(this))
           .catch((error) => {
+            this.subject = null;
+            this.message = null;
+            this.uploadedImg = null;
             if (error.response.status === 401) {
-              this.subject = null;
-              this.message = null;
-              this.uploadedImg = null;
               this.identify401(error);
             } else {
               console.log(error);
