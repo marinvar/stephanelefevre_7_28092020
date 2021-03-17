@@ -17,6 +17,12 @@
             placeholder="Commentaire"
             @input="commentInput"
           />
+
+          <button
+            type="button"
+            class="input-group-text"
+            @click="cancelEdit"
+          >Annuler</button>
           <button
             type="submit"
             class="btn btn-success editCommentButton"
@@ -51,6 +57,9 @@ export default {
   methods: {
     commentInput (e) {
       this.comment = e.target.value;
+    },
+    cancelEdit () {
+      this.updateEditComment(false);
     },
     submitCommentEdit () {
       const bodyParameters = {
