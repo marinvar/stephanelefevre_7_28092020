@@ -21,14 +21,10 @@ const getPagingData = (data, page, limit) => {
 }
 
 exports.createDiscussion = (req, res, next) => {
-  /* if (req.file) {
-    console.log('fichier trouvé');
-  } */
   const discussionObject = req.file ? {
     ...JSON.parse(req.body.discussion),
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body };
-  console.log(discussionObject);
   const discussion = Discussion.build({
     subject: discussionObject.subject,
     message: discussionObject.message,

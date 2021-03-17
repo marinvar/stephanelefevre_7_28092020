@@ -12,7 +12,7 @@
         <div class="input-group p-3">
           <input
             type="text"
-            :value="comment"
+            v-model="comment"
             class="form-control editCommentInput"
             placeholder="Commentaire"
             @input="commentInput"

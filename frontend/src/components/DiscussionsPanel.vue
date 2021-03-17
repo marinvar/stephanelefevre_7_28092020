@@ -75,7 +75,7 @@
         showModalCreate: false,
         subject: null,
         message: null,
-        userId: parseInt(localStorage.getItem('userId')),
+        userId: parseInt(sessionStorage.getItem('userId')),
         uploadedImg: null,
         imgError: null,
         errorMessage: null
@@ -111,7 +111,7 @@
         const discussion = {
           subject: this.subject,
           message: this.message,
-          userId: parseInt(localStorage.getItem('userId'))
+          userId: parseInt(sessionStorage.getItem('userId'))
         };
         this.showModalCreate = false;
         if (this.uploadedImg === null) {
