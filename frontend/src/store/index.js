@@ -14,13 +14,15 @@ export default createStore({
     loggedIn: false,
     addedComment: false,
     addedDiscussion: false,
-    isAdmin: JSON.parse(localStorage.getItem("isAdmin")),
+    isAdmin: JSON.parse(sessionStorage.getItem("isAdmin")),
     editComment: false,
+    editedComment: null,
     expiredConnection: false
   },
   mutations: {
-    UPDATE_EDIT_COMMENT(state, editComment) {
-      state.editComment = editComment;
+    UPDATE_EDIT_COMMENT(state, value) {
+      state.editedComment = value.comment;
+      state.editComment = value.newVal;
     },
     UPDATE_EXPIRED_CONNECTION(state, expiredConnection) {
       state.expiredConnection = expiredConnection;
@@ -28,21 +30,21 @@ export default createStore({
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
       if (!loggedIn) {
-        localStorage.removeItem('pseudo');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('userToken');
+        sessionStorage.removeItem('pseudo');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userToken');
       }
     },
     SET_IS_ADMIN(state, isAdmin) {
       state.isAdmin = isAdmin;
-      localStorage.setItem('isAdmin', isAdmin);
+      sessionStorage.setItem('isAdmin', isAdmin);
     },
     IDENTIFY_401(state, error) {
       if (error.response.data.error.name === "TokenExpiredError" || error.response.data.error.name === "Utilisateur non trouvé !") {
-        localStorage.removeItem('pseudo');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('isAdmin');
+        sessionStorage.removeItem('pseudo');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userToken');
+        sessionStorage.removeItem('isAdmin');
         state.currentDiscussion = {
           User: {pseudo: "Administrateur"},
           subject: "Welcome",

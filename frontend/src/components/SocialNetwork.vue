@@ -23,9 +23,9 @@ export default {
   name: "SocialNetwork",
   data() {
     return {
-      userToken: localStorage.getItem('userToken'),
-      userId: parseInt(localStorage.getItem('userId')),
-      pseudo: localStorage.getItem('pseudo')
+      userToken: sessionStorage.getItem('userToken'),
+      userId: parseInt(sessionStorage.getItem('userId')),
+      pseudo: sessionStorage.getItem('pseudo')
     }
   },
   components: {

@@ -146,10 +146,10 @@ export default {
             password: this.password
           })
           .then(function (response) {
-            localStorage.setItem('userId', response.data.userId);
-            localStorage.setItem('userToken', response.data.token);
-            localStorage.setItem('pseudo', this.pseudo);
-            localStorage.setItem('isAdmin', response.data.isAdmin);
+            sessionStorage.setItem('userId', response.data.userId);
+            sessionStorage.setItem('userToken', response.data.token);
+            sessionStorage.setItem('pseudo', this.pseudo);
+            sessionStorage.setItem('isAdmin', response.data.isAdmin);
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             this.setLoggedIn(true);
             this.setIsAdmin(response.data.isAdmin);

@@ -43,7 +43,7 @@ export default {
     submitComment () {
       const bodyParameters = {
         comment: this.comment,
-        author: localStorage.getItem('pseudo') ? localStorage.getItem('pseudo') : 'Anonymous',
+        author: sessionStorage.getItem('pseudo') ? sessionStorage.getItem('pseudo') : 'Anonymous',
         discussionId: this.currentDiscussion.id
       }
       axios.post('http://localhost:3000/api/comment/createComment', bodyParameters)

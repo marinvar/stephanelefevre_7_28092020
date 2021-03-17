@@ -6,7 +6,7 @@ import Logout from '../views/Logout.vue'
 import Signout from '../views/Signout.vue'
 import axios from 'axios'
 
-const userToken = localStorage.getItem('userToken');
+const userToken = sessionStorage.getItem('userToken');
 axios.defaults.headers.common['Authorization'] = userToken ? `Bearer ${userToken}` : '';
 
 const routes = [

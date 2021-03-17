@@ -34,8 +34,8 @@ export default {
     ...mapActions(['setLoggedIn'])
   },
   beforeMount() {
-    const userId = localStorage.getItem('userId') ? parseInt(localStorage.getItem('userId')) : null;
-    const userToken = localStorage.getItem('userToken') ? localStorage.getItem('userToken') : null;
+    const userId = sessionStorage.getItem('userId') ? parseInt(sessionStorage.getItem('userId')) : null;
+    const userToken = sessionStorage.getItem('userToken') ? sessionStorage.getItem('userToken') : null;
     if (userId !== null && userToken !== null) {
       this.setLoggedIn(true);
     }

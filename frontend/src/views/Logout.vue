@@ -24,10 +24,10 @@ export default {
      this.$router.push('/');
     },
     logout() {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('pseudo');
-      localStorage.removeItem('userToken');
-      localStorage.removeItem('isAdmin');
+      sessionStorage.removeItem('userId');
+      sessionStorage.removeItem('pseudo');
+      sessionStorage.removeItem('userToken');
+      sessionStorage.removeItem('isAdmin');
       this.updateDiscussionsFilter("");
       this.setCurrentDiscussion({
           User: {pseudo: "Administrateur"},
