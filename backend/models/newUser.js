@@ -27,7 +27,6 @@ const User = sequelize.define('User', {
   }
 }, {
   // Other model options go here
-  // tableName: 'Users' not needed, by default all names are pluralized
   createdAt: 'created_at',
   updatedAt: 'updated_at'
 });

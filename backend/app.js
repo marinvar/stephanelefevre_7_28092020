@@ -1,6 +1,5 @@
 const express = require('express');
 const helmet = require('helmet');
-/* const bodyParser = require('body-parser'); */
 const { Sequelize } = require('sequelize');
 const history = require('connect-history-api-fallback');
 const path = require('path');
