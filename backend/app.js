@@ -1,6 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
-const bodyParser = require('body-parser');
+/* const bodyParser = require('body-parser'); */
 const { Sequelize } = require('sequelize');
 const history = require('connect-history-api-fallback');
 const path = require('path');
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
