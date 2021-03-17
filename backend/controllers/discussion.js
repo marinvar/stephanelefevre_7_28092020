@@ -21,10 +21,19 @@ const getPagingData = (data, page, limit) => {
 }
 
 exports.createDiscussion = (req, res, next) => {
+  /* if (req.file) {
+    console.log('fichier trouvé');
+  } */
+  const discussionObject = req.file ? {
+    ...JSON.parse(req.body.discussion),
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body };
+  console.log(discussionObject);
   const discussion = Discussion.build({
-    subject: req.body.subject,
-    message: req.body.message,
-    UserId: req.body.userId
+    subject: discussionObject.subject,
+    message: discussionObject.message,
+    UserId: discussionObject.userId,
+    imageUrl: discussionObject.imageUrl,
   });
   discussion.save()
   .then((discussion) => {

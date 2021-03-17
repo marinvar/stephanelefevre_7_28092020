@@ -42,7 +42,7 @@
             accept="image/*"
             @change.prevent="imageInput($event)"
           />
-          <img id="imgPlayer" src="@/assets/icon.svg" alt="une image" />
+          <img id="imgPlayer" src="@/assets/icon.svg" alt="Image envoyée par le rédacteur du message" />
         </template>
         <template v-slot:footer>
           <button type="button" class="btn btn-secondary mt-3" aria-label="Annuler la création de discussion" @click="cancelDiscussion">
@@ -91,6 +91,8 @@
         img.classList.add('displayed');
         this.uploadedImg = null;
         this.imgError = null;
+        this.subject = null;
+        this.message = null;
       },
       createDiscussion () {
         if (this.subject === null || this.message === null) {
@@ -106,26 +108,54 @@
           this.updateDiscussionsFilter('');
           input.value = '';
         }
-        const bodyParameters = {
+        const discussion = {
           subject: this.subject,
           message: this.message,
           userId: parseInt(localStorage.getItem('userId'))
-        }
+        };
         this.showModalCreate = false;
-        axios.post('http://localhost:3000/api/discussion/createDiscussion', bodyParameters)
-        .then(function (response) {
-          this.setCurrentDiscussion(response.data.discussion);
-          this.updateAddedDiscussion(true);
-          this.subject = null;
-          this.message = null;
-        }.bind(this))
-        .catch((error) => {
-          if (error.response.status === 401) {
-            this.identify401(error);
-          } else {
-            console.log(error);
-          }
-        });
+        if (this.uploadedImg === null) {
+          axios.post('http://localhost:3000/api/discussion/createDiscussion', discussion)
+          .then(function (response) {
+            this.setCurrentDiscussion(response.data.discussion);
+            this.updateAddedDiscussion(true);
+            this.subject = null;
+            this.message = null;
+            this.uploadedImg = null;
+          }.bind(this))
+          .catch((error) => {
+            this.subject = null;
+            this.message = null;
+            this.uploadedImg = null;
+            if (error.response.status === 401) {
+              this.identify401(error);
+            } else {
+              console.log(error);
+            }
+          });
+        } else {
+          const formData = new FormData();
+          formData.append('discussion', JSON.stringify(discussion));
+          formData.append('image', this.uploadedImg);
+          axios.post('http://localhost:3000/api/discussion/createDiscussion', formData)
+          .then(function (response) {
+            this.setCurrentDiscussion(response.data.discussion);
+            this.updateAddedDiscussion(true);
+            this.subject = null;
+            this.message = null;
+            this.uploadedImg = null;
+          }.bind(this))
+          .catch((error) => {
+            if (error.response.status === 401) {
+              this.subject = null;
+              this.message = null;
+              this.uploadedImg = null;
+              this.identify401(error);
+            } else {
+              console.log(error);
+            }
+          });
+        }
       },
       cancelDiscussion() {
         this.showModalCreate = false;

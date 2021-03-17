@@ -57,7 +57,7 @@ export default {
         newComment: this.comment,
         id: this.initialComment.id
       }
-      axios.post('http://localhost:3000/api/comment/editComment', bodyParameters)
+      axios.put('http://localhost:3000/api/comment/editComment', bodyParameters)
       .then(function () {
         this.comment = null;
         this.updateAddedComment(true);

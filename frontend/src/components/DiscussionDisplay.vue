@@ -15,6 +15,12 @@
     </discussion-header>
     <discussion-body >
       <template v-slot:message>
+        <img
+          class="discussionImage m-2"
+          :src="currentDiscussion.imageUrl"
+          alt="image envoyée par le rédacteur du message"
+          v-if="currentDiscussion.imageUrl !== null"
+        />
         <p class="text-start">
           {{ currentDiscussion.message }}
         </p>
@@ -168,7 +174,7 @@ export default {
     commentDelete (id) {
       let params = {};
       params ["id"] = id; 
-      axios.get('http://localhost:3000/api/comment/deleteComment', { params })
+      axios.delete('http://localhost:3000/api/comment/deleteComment', { params })
       .then(() => {
         this.updateAddedComment(true);
       })
@@ -194,6 +200,11 @@ export default {
 p {
   word-break: break-word;
   margin: 1rem;
+}
+
+.discussionImage {
+  max-width: 50vw;
+  max-height: 10rem;
 }
 
 .comment-created {

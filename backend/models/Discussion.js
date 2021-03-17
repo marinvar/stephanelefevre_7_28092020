@@ -14,6 +14,9 @@ const Discussion = sequelize.define('Discussion', {
     type: DataTypes.STRING(1550),
     allowNull: false
   },
+  imageUrl: {
+    type: DataTypes.STRING
+  },
   created_at: {
     type: DataTypes.DATE,
     get: function () {

@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const history = require('connect-history-api-fallback');
+const path = require('path');
 
 const { dbConnect, dbTablesSync } = require('./db-setup');
 const { insertData } = require('./db-insert');
@@ -43,7 +44,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-/* app.use('/images', express.static(path.join(__dirname, 'images'))); */
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/discussion', discussionRoutes);
 app.use('/api/comment', commentRoutes);
