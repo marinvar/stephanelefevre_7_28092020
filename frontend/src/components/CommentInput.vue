@@ -48,7 +48,7 @@ export default {
       }
       axios.post('http://localhost:3000/api/comment/createComment', bodyParameters)
       .then(function () {
-        this.comment = "";
+        this.comment = null;
         document.getElementById('createCommentInput').value = '';
         this.updateAddedComment(true);
       }.bind(this))
