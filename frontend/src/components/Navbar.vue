@@ -93,12 +93,19 @@ header {
 
 @media (max-width: 575px) {
   header {
-    a {
+    #navbar-links a {
+      margin: 0;
+      margin-bottom: 0.3rem;
+      border-bottom: 0.2rem solid #091F43;
       &:hover {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
+      border-bottom: 0.2rem solid #D1515A;
       }
       &.router-link-exact-active {
-        margin-bottom: 1rem;
+        &:hover {
+          margin-bottom: 0.2rem;
+          padding-bottom: 0.4rem;
+        }
       }
     }
   }
