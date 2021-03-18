@@ -4,7 +4,7 @@
       <img alt="Logo Groupomania" src="@/assets/icon-left-font-monochrome-white.svg" />
     </router-link>
     <nav class="navbar navbar-expand-sm pt-0">
-      <div class="container-fluid">
+      <div class="container-fluid justify-content-center">
         <button class="navbar-toggler custom-toggler" type="button" aria-label="Basculer l'affichage du menu" aria-pressed="false" data-bs-toggle="collapse" data-bs-target="#navbar-links">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,7 +62,7 @@ header {
       font-weight: bold;
       color: white;
       text-decoration: none;
-      margin: 1rem;
+      margin: 1rem 0.3rem;
       padding-left: 0.3rem;
       padding-right: 0.3rem;
       border-top: 0.5rem solid #091F43;

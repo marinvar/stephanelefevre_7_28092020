@@ -41,6 +41,9 @@ export default {
       this.comment = e.target.value;
     },
     submitComment () {
+      if (!this.comment || this.comment.length === 0) {
+        return false;
+      }
       const bodyParameters = {
         comment: this.comment,
         author: sessionStorage.getItem('pseudo') ? sessionStorage.getItem('pseudo') : 'Anonymous',

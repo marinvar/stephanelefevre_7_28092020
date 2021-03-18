@@ -80,10 +80,6 @@ exports.signout = (req, res, next) => {
           discussion.update({ UserId: 1} );
         }
       })
-      .catch(error => {
-        message:
-         error.message || "Une erreur est survenue lors de la suppression des discussions." 
-      })
       .then(() => {
         User.destroy({ where: { id: user.id } })
         .then(() => {
@@ -92,7 +88,11 @@ exports.signout = (req, res, next) => {
         .catch(error => {
           message:
           error.message || "Une erreur est survenue lors de la suppression de l'utilisateur." 
-        });
+        })
+      .catch(error => {
+        message:
+         error.message || "Une erreur est survenue lors de la suppression des discussions." 
+      })
       })
       .catch(error => {
         message:

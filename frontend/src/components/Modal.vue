@@ -51,10 +51,10 @@
   color: #091F43;
   font-size: 1.2rem;
   font-weight: 600;
-  min-width: 20rem;
+  min-width: 18rem;
   width: 60%;
   margin: 0px auto;
-  padding: 20px 30px;
+  padding: 20px 10px;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
@@ -64,6 +64,10 @@
 
 .modal-header {
   display: block!important;
+}
+
+#textareaModalMessageCreate, #inputModalSubjectCreate {
+  width: 90%;
 }
 
 /*

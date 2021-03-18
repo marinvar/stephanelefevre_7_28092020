@@ -32,11 +32,10 @@
           </textarea>
           <p class="drop-text">Vous pouvez également déposer une image (y compris les images animées) dans la zone de texte, ou utiliser le bouton suivant :</p>
           <p class="file-error" v-if="imgError !== null">{{ imgError }}</p>
+          <label for="inputImg" class="file-label mx-auto mb-3 btn btn-secondary">Choisir une image</label>
           <input
             id="inputImg"
             type="file"
-            class="mx-auto mb-3 btn btn-secondary"
-            title="Ajouter un gif"
             accept="image/*"
             @change.prevent="imageInput($event)"
           />
@@ -331,8 +330,15 @@
     color: red;
     font-size: 1.2rem;
   }
-
-  .file-error {
+  .file-label {
+    cursor: pointer;
+    font-weight: 600;
+    padding-left: 3rem!important;
+    padding-right: 3rem!important;
+    width: max-content;
+  }
+  #inputImg {
+    display: none!important;
   }
 
 @media (max-width: 767px) {

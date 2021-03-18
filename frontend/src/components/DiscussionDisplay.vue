@@ -33,12 +33,15 @@
         <template v-slot:message>
           <div class="text-start">
             {{ comment.comment }}
+            <div v-if="editComment === true" :value="comment.comment">
+              <comment-edit v-bind:initialComment="comment" />
+            </div>
           </div>
         </template>
         <template v-slot:created>
           <div  class="comment-created text-end mx-3" v-bind:title="'Par ' + comment.author + ', le ' + comment.created_at">
             Par {{ comment.author }}, le {{ comment.created_at }}
-            <button type="button" v-if="pseudo === comment.author" class="mx-1 mb-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Editer ce commentaire" title="Editer ce commentaire" @click="commentEdit(comment)" >
+            <button type="button" v-if="pseudo === comment.author" class="mx-1 mb-1 comment-edit" id="editComment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Editer ce commentaire" title="Editer ce commentaire" @click="commentEdit($event)" >
               Editer <b-icon-pencil-square />
             </button>
             <button type="button" v-if="isAdmin === true || pseudo === comment.author" class="mx-1 mb-1 comment-delete" id="deleteComment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Supprimer ce commentaire" title="Supprimer ce commentaire" @click="commentDelete(comment.id)" >
@@ -48,9 +51,6 @@
         </template>
       </discussion-comment>
     </div>
-  </div>
-  <div v-if="editComment === true" :value="editedComment.comment">
-    <comment-edit v-bind:initialComment="editedComment" />
   </div>
   <div id="comments-controls" class="mt-auto">
     <div class="mt-3">
@@ -91,7 +91,7 @@ export default {
       comments: [],
       totalPages: 1,
       discussionId: this.currentDiscussion ? this.currentDiscussion.id : "",
-      pseudo: sessionStorage.getItem('pseudo'),
+      pseudo: localStorage.getItem('pseudo'),
       page: 1,
       count: 0,
       pageSize: 6,
@@ -109,7 +109,7 @@ export default {
     "b-icon-pencil-square": BIconPencilSquare
   },
   computed: {
-    ...mapState(['currentDiscussion','addedComment','isAdmin','editComment','editedComment'])
+    ...mapState(['currentDiscussion','addedComment','isAdmin','editComment'])
   },
   created() {
     this.$watch('currentDiscussion', () => {
@@ -123,7 +123,7 @@ export default {
     })
     this.$watch('editComment', (newVal) => {
       if (!newVal) {
-        this.updateEditComment(false, null);
+        this.updateEditComment(false);
       }
     })
   },
@@ -186,8 +186,8 @@ export default {
           }
       });
     },
-    commentEdit (comment) {
-      this.updateEditComment({ newVal:true, comment});
+    commentEdit () {
+      this.updateEditComment(true);
     },
     ...mapActions(['updateAddedComment','identify401','updateEditComment'])
     
