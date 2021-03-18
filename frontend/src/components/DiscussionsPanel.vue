@@ -15,7 +15,7 @@
       </div>
     </div>
     <discussions-list />
-    <div v-if="showModalCreate">
+    <div v-if="showModalCreate" @drop.prevent="dropHandler($event)" @dragover.prevent="dragOverHandler($event)">
       <modal-cmp @closeModalCreate="closeModalCreate()" aria-label="Créer une nouvelle discussion">
         <template v-slot:header>
           <label for="inputModalSubjectCreate" aria-label="sujet de la discussion">Nouvelle discussion</label>
@@ -28,8 +28,6 @@
             v-model="message"
             placeholder="Message"
             class="mx-auto rounded-3"
-            @drop.prevent="dropHandler($event)"
-            @dragover.prevent="dragOverHandler($event)"
           >
           </textarea>
           <p class="drop-text">Vous pouvez également déposer une image (y compris les images animées) dans la zone de texte, ou utiliser le bouton suivant :</p>
@@ -86,13 +84,13 @@
     },
     methods: {
       closeModalCreate() {
-        this.showModalCreate = false;
         const img = document.getElementById("imgPlayer");
-        img.classList.add('displayed');
+        img.classList.remove('displayed');
         this.uploadedImg = null;
         this.imgError = null;
         this.subject = null;
         this.message = null;
+        this.showModalCreate = false;
       },
       createDiscussion () {
         if (this.subject === null || this.message === null) {
@@ -113,7 +111,6 @@
           message: this.message,
           userId: parseInt(sessionStorage.getItem('userId'))
         };
-        this.showModalCreate = false;
         if (this.uploadedImg === null) {
           axios.post('http://localhost:3000/api/discussion/createDiscussion', discussion)
           .then(function (response) {
@@ -122,14 +119,18 @@
             this.subject = null;
             this.message = null;
             this.uploadedImg = null;
+            this.showModalCreate = false;
           }.bind(this))
           .catch((error) => {
             this.subject = null;
             this.message = null;
             this.uploadedImg = null;
+            const img = document.getElementById("imgPlayer");
+            img.classList.remove('displayed');
             if (error.response.status === 401) {
               this.identify401(error);
             } else {
+              this.errorMessage = "Une erreur est survenue. Veuillez réessayer."
               console.log(error);
             }
           });
@@ -144,11 +145,15 @@
             this.subject = null;
             this.message = null;
             this.uploadedImg = null;
+            this.showModalCreate = false;
           }.bind(this))
           .catch((error) => {
             this.subject = null;
             this.message = null;
             this.uploadedImg = null;
+            const img = document.getElementById("imgPlayer");
+            img.classList.remove('displayed');
+            this.errorMessage = "Une erreur est survenue. Veuillez réessayer."
             if (error.response.status === 401) {
               this.identify401(error);
             } else {
