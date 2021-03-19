@@ -10,6 +10,7 @@
         type="text"
         id="createCommentInput"
         class="form-control"
+        title="Entrez votre commentaire ici"
         placeholder="Commentaire"
         @input="commentInput"
       />

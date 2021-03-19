@@ -74,38 +74,43 @@ exports.signout = (req, res, next) => {
       if (!valid) {
         return res.status(401).json({ error: "Mot de passe incorrect !" });
       }
+      const updateDiscussion = (discussion) => {
+        return new Promise(resolve => {
+          resolve(discussion.update({ UserId: 1} ))
+        })
+      }
       Discussion.findAll({ where: { UserId: user.id } })
       .then((discussions) => {
-        for (discussion of discussions) {
-          discussion.update({ UserId: 1} );
-        }
-      })
-      .then(() => {
-        User.destroy({ where: { id: user.id } })
+        Promise.all(
+          discussions.map(d => updateDiscussion(d))
+        )
         .then(() => {
-          return res.status(200).json({ message: 'Utilisateur supprimé !' });
+          User.destroy({ where: { id: user.id } })
+          .then(() => {
+            return res.status(200).json({ message: 'Utilisateur supprimé !' });
+          })
+          .catch(error => {
+            message:
+            error.message || "Une erreur est survenue lors de la suppression de l'utilisateur." 
+          })
         })
         .catch(error => {
           message:
-          error.message || "Une erreur est survenue lors de la suppression de l'utilisateur." 
-        })
-      .catch(error => {
-        message:
-         error.message || "Une erreur est survenue lors de la suppression des discussions." 
-      })
+          error.message || "Une erreur est survenue lors de la suppression des discussions." 
+        });
       })
       .catch(error => {
         message:
-         error.message || "Une erreur est survenue lors de la suppression des discussions." 
-      }); 
+        error.message || "Une erreur est survenue lors de la recherche des discussions de l'utilisateur." 
+      });
     })
     .catch(error => {
       message:
-       error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
+      error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
     });
   })
   .catch(error => {
     message:
-     error.message || "Une erreur est survenue lors de la recherche de l'utilisateur." 
+    error.message || "Une erreur est survenue lors de la suppression de l'utilisateur." 
   });
 };
