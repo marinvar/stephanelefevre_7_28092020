@@ -5,9 +5,6 @@ const formValidator = (req, res, next) => {
 
   const regX = /[^\p{L}\s\d'-]+/ug;
   
-  /* const sauceObject = req.file ? {
-    ...JSON.parse(req.body.sauce)
-  } : { ...req.body }; */
   const parsedObject = { ...req.body };
 
   if (parsedObject.subject) {
@@ -18,6 +15,9 @@ const formValidator = (req, res, next) => {
   }
   if (parsedObject.comment) {
     parsedObject.comment = parsedObject.comment.replace(regX, '');
+  }
+  if (parsedObject.newComment) {
+    parsedObject.newComment = parsedObject.newComment.replace(regX, '');
   }
   if (parsedObject.author) {
     parsedObject.author = parsedObject.author.replace(regX, '');

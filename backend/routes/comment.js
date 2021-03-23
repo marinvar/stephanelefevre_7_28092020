@@ -7,7 +7,7 @@ const formValidator = require('../middleware/form-validator');
 
 router.get('/getComments', auth, commentCtrl.getComments);
 router.post('/createComment', auth, formValidator, commentCtrl.createComment);
-router.put('/editComment', auth, commentCtrl.editComment);
+router.put('/editComment', auth, formValidator, commentCtrl.editComment);
 router.delete('/deleteComment', auth, commentCtrl.deleteComment);
 
 module.exports = router;
