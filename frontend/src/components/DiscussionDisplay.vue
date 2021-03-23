@@ -109,7 +109,6 @@ export default {
     "b-icon-pencil-square": BIconPencilSquare
   },
   computed: {
-    CommentEdit,
     ...mapState(['currentDiscussion','addedComment','isAdmin','editComment','editedComment'])
   },
   created() {
