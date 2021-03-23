@@ -9,7 +9,7 @@
   "author": "stephane lefevre",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "connect-history-api-fallback": "^1.6.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
