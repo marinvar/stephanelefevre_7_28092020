@@ -91,7 +91,7 @@ export default {
       comments: [],
       totalPages: 1,
       discussionId: this.currentDiscussion ? this.currentDiscussion.id : "",
-      pseudo: localStorage.getItem('pseudo'),
+      pseudo: sessionStorage.getItem('pseudo'),
       page: 1,
       count: 0,
       pageSize: 6,
