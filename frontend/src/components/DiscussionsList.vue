@@ -37,8 +37,8 @@
 
 <script>
   import { mapState, mapActions } from 'vuex';
-  import VPagination from 'vue3-pagination';
-  import "vue3-pagination/dist/vue3-pagination.css";
+  import VPagination from '@/vendors/vue3-pagination';
+  import "@/vendors/vue3-pagination/dist/vue3-pagination.css";
   import axios from 'axios';
 
   import DiscussionHeader from '@/components/DiscussionHeader.vue';
