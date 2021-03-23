@@ -30,7 +30,7 @@
             class="mx-auto rounded-3"
           >
           </textarea>
-          <p class="drop-text">Vous pouvez également déposer une image (y compris les images animées) dans la zone de texte, ou utiliser le bouton suivant :</p>
+          <p class="drop-text">Vous pouvez également déposer une image (y compris les images animées, 500Ko maximum) dans la zone de texte, ou utiliser le bouton suivant :</p>
           <p class="file-error" v-if="imgError !== null">{{ imgError }}</p>
           <label for="inputImg" class="file-label mx-auto mb-3 btn btn-secondary">Choisir une image</label>
           <input
@@ -222,7 +222,6 @@
           });
           reader.readAsDataURL(this.uploadedImg);
         }
-        /* console.log(files[0] + ": " + files[0].name + ", " + (files[0].size / 1000) + " Ko"); */
       },
       dragOverHandler(event) {
         event.stopPropagation();
@@ -240,7 +239,6 @@
           this.imgError = "Ce fichier n'est pas une image : " + file.type + " !"
           return false;
         } else {
-          console.log(file.type);
           this.uploadedImg = file;
           this.imgError = null;
           const reader = new FileReader();
