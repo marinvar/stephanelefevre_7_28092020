@@ -84,7 +84,6 @@ import "vue3-pagination/dist/vue3-pagination.css";
 import { mapState, mapActions } from 'vuex';
 import axios from 'axios';
 import { BIconTrash, BIconPencilSquare } from 'bootstrap-icons-vue';
-/* import CommentEdit from './CommentEdit.vue'; */
 
 export default {
   data() {
