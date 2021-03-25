@@ -72,7 +72,7 @@
         showModalCreate: false,
         subject: null,
         message: null,
-        userId: parseInt(sessionStorage.getItem('userId')),
+        userId: parseInt(localStorage.getItem('userId')),
         uploadedImg: null,
         imgError: null,
         errorMessage: null
@@ -108,7 +108,7 @@
         const discussion = {
           subject: this.subject,
           message: this.message,
-          userId: parseInt(sessionStorage.getItem('userId'))
+          userId: parseInt(localStorage.getItem('userId'))
         };
         if (this.uploadedImg === null) {
           axios.post('http://localhost:3000/api/discussion/createDiscussion', discussion)

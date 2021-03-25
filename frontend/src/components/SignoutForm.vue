@@ -72,10 +72,10 @@ export default {
         password: this.password
       })
       .then(() => {
-        sessionStorage.removeItem('pseudo');
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('userToken');
-        sessionStorage.removeItem('isAdmin');
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('isAdmin');
         this.setLoggedIn(false);
         this.setIsAdmin(false);
         this.updateDiscussionsFilter("");

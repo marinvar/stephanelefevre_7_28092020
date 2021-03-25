@@ -14,7 +14,7 @@ export default createStore({
     loggedIn: false,
     addedComment: false,
     addedDiscussion: false,
-    isAdmin: JSON.parse(sessionStorage.getItem("isAdmin")),
+    isAdmin: JSON.parse(localStorage.getItem("isAdmin")),
     editComment: false,
     editedComment: null,
     expiredConnection: false
@@ -30,21 +30,21 @@ export default createStore({
     SET_LOGGED_IN(state, loggedIn) {
       state.loggedIn = loggedIn;
       if (!loggedIn) {
-        sessionStorage.removeItem('pseudo');
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('userToken');
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
       }
     },
     SET_IS_ADMIN(state, isAdmin) {
       state.isAdmin = isAdmin;
-      sessionStorage.setItem('isAdmin', isAdmin);
+      localStorage.setItem('isAdmin', isAdmin);
     },
     IDENTIFY_401(state, error) {
       if (error.response.data.error.name === "TokenExpiredError" || error.response.data.error.name === "Utilisateur non trouvé !") {
-        sessionStorage.removeItem('pseudo');
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('userToken');
-        sessionStorage.removeItem('isAdmin');
+        localStorage.removeItem('pseudo');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userToken');
+        localStorage.removeItem('isAdmin');
         state.currentDiscussion = {
           User: {pseudo: "Administrateur"},
           subject: "Welcome",
